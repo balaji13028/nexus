@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 class ViewVisitorProfile extends StatefulWidget {
@@ -14,11 +15,38 @@ const  ViewVisitorProfile({ Key? key, required this.name, required this.numb,req
 }
 
 class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
-
- final outtime = DateTime(2022, 04, 29 , 16,48,54);
- final now = DateTime.now();
+  
+ var intime = DateTime(2022,05,02,15,50,00);
+ String outtime = DateFormat('hh:mm:ss').format(DateTime.now());
+ String outdate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+ String _timeasString = DateTime.now().toString();
+ int _timeasInt = 0;
+ String indate = DateTime.now().toString();
+ String intimeing = DateTime.now().toString();
  
 
+@override 
+void initState(){
+   indate = DateFormat('dd-MM-yyyy').format(intime);
+   intimeing = DateFormat('hh:mm:ss').format(intime);
+  _timeasString = DateFormat("hh:mm:ss").format(intime);
+  Timer.periodic(const Duration(seconds: 1),( Timer t){
+    _getDuration(intime);  
+    
+  }    
+  );
+  super.initState();
+}
+void _getDuration(time1){
+
+Duration timeelapsed = DateTime.now().difference(time1);
+if(!mounted) return;
+    setState(() {
+      _timeasString = timeelapsed.toString().split(".")[0];
+      _timeasInt = timeelapsed.inMinutes;   
+
+    });               
+}
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +62,7 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
         padding: const EdgeInsets.symmetric(horizontal: 15,),
         child: Column(                       
           children:[ 
-           const Padding(padding: EdgeInsets.only(top: 25)),           
+           const Padding(padding: EdgeInsets.only(top: 6)),           
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,                
                 children: [                                  
@@ -43,12 +71,12 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                   backgroundColor: Colors.deepPurple.shade500, 
                    child:ClipOval(
                      child: Image.file(File(widget.image),
-                     fit: BoxFit.cover,width: 137,height: 137,),
+                     fit: BoxFit.cover,width: 136,height: 136,),
                    ),                                             
                   ),
                 ],
               ),
-            const SizedBox(height: 16,),                         
+            const SizedBox(height: 10,),                         
                  Text(widget.name,
                  style: TextStyle(
                  fontSize: 22,
@@ -56,7 +84,7 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                  fontWeight: FontWeight.bold,                 
                ),
                ),             
-             const SizedBox(height: 15,),                         
+             const SizedBox(height: 10,),                         
              Card(
                margin:const EdgeInsets.symmetric(horizontal: 2.0,vertical: 2,),
                  elevation:2.0,
@@ -143,7 +171,7 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
-                                 const Icon(Icons.person,
+                                 const Icon(Icons.timer,
                                    color: Colors.white70,
                                    ),
                                    const SizedBox(width: 30,),
@@ -190,13 +218,13 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                    borderRadius: BorderRadius.circular(10),
                  ),
                   padding: const EdgeInsets.fromLTRB(20, 10, 6, 10),
-                   height: 140,
-                  child: Row(               
-                    children: [                                                                            
+                   height: 185,
+                    child: Row(               
+                     children: [                                                                            
                         Column(                             
                           crossAxisAlignment: CrossAxisAlignment.start,                 
-                          children: [                        
-                            Padding(
+                            children: [                        
+                             Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
@@ -213,9 +241,15 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                                          color: Colors.white70
                                        ),
                                        ),
-                                       Text('${now}',
+                                       Text(indate,
                                        style:const TextStyle(
-                                       fontSize: 20,
+                                       fontSize: 16,
+                                       color: Colors.white70,                          
+                                  ),
+                                  ),
+                                   Text(intimeing,
+                                       style:const TextStyle(
+                                       fontSize: 16,
                                        color: Colors.white70,                          
                                   ),
                                   ),
@@ -242,10 +276,45 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                                        fontSize: 12,
                                       color: Colors.white70
                                   ),),
-                                     Text('${outtime}',
+                                     Text(outdate,
                                      style:  const TextStyle(
-                                     fontSize: 20,
+                                     fontSize: 16,
                                      color: Colors.white70,
+                                    ),
+                                    ),
+                                     Text(outtime,                                    
+                                     style:  const TextStyle(
+                                     fontSize: 16,
+                                     color: Colors.white70,
+                                    ),
+                                   
+                                    ),
+                                   ],
+                                  ), 
+                                ],
+                              ),
+                            ), 
+                           const SizedBox(height: 4,),
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Row(
+                                children: [
+                                 const Icon(Icons.time_to_leave_rounded,
+                                   color: Colors.white70,
+                                   ),
+                                   const SizedBox(width: 30,),
+                                    Column(
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      children:[
+                                       const Text('Time Elapsed:',
+                                       style: TextStyle(
+                                       fontSize: 12,
+                                      color: Colors.white70
+                                  ),),
+                                     Text(_timeasString,
+                                     style: TextStyle(
+                                     fontSize: 16,
+                                     color: (_timeasInt>95)?Colors.red:Colors.white70,
                                     ),
                                     ),
                                    ],
@@ -253,7 +322,6 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
                                 ],
                               ),
                             ), 
-                           
                            ],
                          ),  
                         ],
@@ -265,4 +333,6 @@ class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
       )
     );
   }
+
+
 }

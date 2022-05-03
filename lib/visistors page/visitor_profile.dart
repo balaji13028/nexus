@@ -353,8 +353,7 @@ class _VisitorProfileState extends State<VisitorProfile> {
                               actions: <Widget>[
                               TextButton(                                
                               onPressed: () {
-                              Navigator.of(ctx).pop();
-                              
+                              Navigator.of(ctx).pop();                            
                             },                              
                               child: const Text("Done"),
                           ),

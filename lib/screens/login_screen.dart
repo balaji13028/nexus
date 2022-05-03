@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    SizedBox(height: 10,),
+                    SizedBox(height: 15,),
                     Text('Welcome',style: TextStyle(fontSize: 26,
                     fontWeight: FontWeight.bold),),
                     SizedBox(height: 6,),
@@ -69,9 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: 'User Name',
                           labelStyle:TextStyle(
                             fontSize: 14,
-                            color: Colors.grey.shade400,
-                            
-                           
+                            color: Colors.grey.shade400,                                                       
                             ),
                          enabledBorder: OutlineInputBorder(
                            borderRadius: BorderRadius.circular(10),
@@ -96,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         onChanged: (value) => _userName = value,
                       ),
-                      const SizedBox(height: 8,),
+                      const SizedBox(height: 10,),
                       TextFormField(
                           
                         obscureText: showPassword ,
@@ -147,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         
                          onChanged: (value) => _password= value,
                       ),
-                      const SizedBox(height: 8,),
+                      const SizedBox(height: 12,),
                       const Align(
                         alignment: Alignment.topRight,
                         child: Text(
@@ -158,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                    const SizedBox(height: 18,),
+                    const SizedBox(height: 22,),
                       Container(
                         height: 50,
                         width: double.infinity,
@@ -230,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                      padding:const EdgeInsets.only(bottom:4),
+                      padding:const EdgeInsets.only(bottom:16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
