@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application/api_url.dart';
 import 'package:flutter_application/screens/home_screen.dart';
 import 'package:flutter_application/screens/login_screen.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -9,12 +13,16 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController usercontroller=TextEditingController();
+  TextEditingController numbercontroller=TextEditingController();
+
   bool showPassword=true;
   String _userEmail = '';
 
   String _userName = '';
 
-  String _password = '';
+  String _number = '';
 
 
 
@@ -23,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final bool? isValid = _formKey.currentState?.validate();
     if(isValid == true){
       Navigator.push(context, MaterialPageRoute(
-      builder: (context) => HomeScreen(),
+      builder: (context) => LoginScreen(),
       
     ));
     }
@@ -39,7 +47,16 @@ class _SignUpPageState extends State<SignUpPage> {
        resizeToAvoidBottomInset: false,
            body: SafeArea(
              child: Container(
-              
+              decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromRGBO(4, 9, 35, 1),
+            Color.fromRGBO(39, 105, 170, 1),
+          ],
+          begin: FractionalOffset.bottomLeft,
+          end: FractionalOffset.topCenter
+        )
+        ),
               padding: const EdgeInsets.only(left: 16,right: 16),
               child: Column(                
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,29 +65,31 @@ class _SignUpPageState extends State<SignUpPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const[
-                       SizedBox(height: 4,),
+                       SizedBox(height: 15,),
                       Text('Create Account',style: TextStyle(fontSize: 26,
                       fontWeight: FontWeight.bold),),
                        SizedBox(height: 6,),
-                      Text('Sign up to get started',style: TextStyle(fontSize: 20,color: Colors.grey,),)
+                      Text('Sign up to get started',style: TextStyle(fontSize: 20,color: Colors.white70,),)
                     ],
                   ),
                   Form(
                     key: _formKey,
                     child: Column(
-               children: [
+                 children: [
                     TextFormField(
+                      controller: namecontroller,
+                      style:const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Full Name',
                         labelStyle:  TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade400,
-                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade400,                          
                           ),
+                          prefixIcon: const Icon(Icons.person,color: Colors.white54),
                        enabledBorder: OutlineInputBorder(
                          borderRadius: BorderRadius.circular(10),
                          borderSide: BorderSide(
-                         color: Colors.grey.shade400,
+                         color: Colors.grey.shade300,
                          ),
                         ),
                        focusedBorder: OutlineInputBorder(
@@ -91,19 +110,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         onChanged: (value) => _userName=value,
                       ),
-                      const SizedBox(height: 6,),
+                      const SizedBox(height: 10,),
                       TextFormField(
+                        controller: usercontroller,
+                        style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Email ID',
                         labelStyle:  TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade400,
-                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade400,                          
                           ),
+                            prefixIcon: const Icon(Icons.mail_outline,color: Colors.white54),
                        enabledBorder: OutlineInputBorder(
                          borderRadius: BorderRadius.circular(10),
                          borderSide: BorderSide(
-                         color: Colors.grey.shade400,
+                         color: Colors.grey.shade300,
                          ),
                         ),
                        focusedBorder: OutlineInputBorder(
@@ -125,13 +146,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         onChanged: (value) => _userEmail = value,
                       ),
-                     const SizedBox(height: 6,),
+                     const SizedBox(height: 10,),
                       TextFormField(
+                        controller: numbercontroller,
+                         style: const TextStyle(color: Colors.white),
                         obscureText: showPassword,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Phone number',
                          suffixIcon: IconButton(
-                            icon: showPassword ? const Icon(Icons.visibility_off):
+                            icon: showPassword ? const Icon(Icons.visibility_off,color: Colors.white38,):
                             const Icon(Icons.visibility,color: Colors.black,),
                             onPressed: () {
                               setState(() {      
@@ -143,12 +166,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         labelStyle: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade400,
-                          fontWeight: FontWeight.w600,
+                          
                           ),
+                            prefixIcon: const Icon(Icons.key_sharp,color: Colors.white54),
                        enabledBorder: OutlineInputBorder(
                          borderRadius: BorderRadius.circular(10),
                          borderSide: BorderSide(
-                         color: Colors.grey.shade400,
+                         color: Colors.grey.shade300,
                          ),
                         ),
                        focusedBorder: OutlineInputBorder(
@@ -159,111 +183,188 @@ class _SignUpPageState extends State<SignUpPage> {
                        ),
                          floatingLabelBehavior : FloatingLabelBehavior.auto,
                         ),
-                        validator: (value) {
-                          
-                          if (value == null || value.trim().isEmpty) {
-                            return 'This field is required';
-                          }
-                          if (value.trim().length < 8) {
-
-                            return 'Password must be at least 8 characters in length';
-                          }
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                            return 'Please enter a valid password,\n'
-                                    '* At least one number,\n'
-                                    '* At least one uppercase,\n'
-                                    '* At least one lowercase.\n'
-                                    '* At least one specialn character';
-                          }
-                          
-                         
+                        validator: (value){
+                                      if(value== null ||  value.trim().isEmpty){
+                                        return 'Enter your mobile number';
+                                      }if(value.trim().length!=10){
+                                        return 'Please enter correct number';
+                                      }
+                                       if (!RegExp(r'^(?=.*?[0-9]).{10,}$').hasMatch(value)) {
+                                        return 'Please enter vaild number';
+                                      }
+                          // if (!RegExp(r'^(?=.*?[A-Z]).{8,}$').hasMatch(value)) {
+                          //   return                                   
+                          //           '* At least one uppercase,\n';                                 
+                                    
+                          // }else
+                          // if(!RegExp(r'^(?=.*?[a-z]).{8,}$').hasMatch(value)){
+                          //      return 
+                          //               '* At least one lowercase.\n';
+                          // }else
+                          // if(!RegExp(r'^(?=.*?[0-9]).{10,}$').hasMatch(value)){
+                          //        return 
+                          //               '* At least one number,\n';
+                          // }
+                          //else
+                          // if(!RegExp(r'^(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)){
+                          //        return 
+                          //        '* At least one special character';
+                          // }
                           return null;
                         },
-                        onChanged: (value) => _password = value,
+                        onChanged: (value) => _number = value,
                       
                       ),
-                    const SizedBox(height: 6,),
+                    const SizedBox(height: 22,),
                     Container(
-                      height: 50,
-                      width: double.infinity,
+                      
                       child: TextButton(
-                        onPressed:() {
-                         
-                             return _trySubmitForm(context);
-                           
-                                                                                                                          
+                        onPressed: () async {
+
+                          String value = await Signup(namecontroller.text, usercontroller.text,numbercontroller.text);                       
+                            if(value == 'true'){
+                              final bool? isValid = _formKey.currentState?.validate();                          
+                              if (isValid == true) {
+                                EasyLoading.showSuccess(
+                                  "Successfully registered",
+                                  duration: const Duration(milliseconds: 500),
+                                  dismissOnTap: true
+                                );
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => LoginScreen(),
+                               ));
+                              }
+                            } else if(value=="email is existed") {
+                              final bool? isValid =_formKey.currentState?.validate();
+                              EasyLoading.showToast('This Email is already used',
+                                  toastPosition:
+                                      EasyLoadingToastPosition.bottom,
+                                );
+                            }else if (value=="number is existed"){
+                              final bool? isValid =_formKey.currentState?.validate();
+                              EasyLoading.showToast('This mobile number is already used',
+                                  toastPosition:
+                                      EasyLoadingToastPosition.bottom,
+                                );
+                            }else{
+                               final bool? isValid =_formKey.currentState?.validate();
+                              EasyLoading.showToast('Please enter the details',
+                                  toastPosition:
+                                      EasyLoadingToastPosition.bottom,
+                                );
+                            }
+
                           },
                          style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),),),
                         ),
                         child: Ink(decoration:  BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                         gradient:const  LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors:[
-                          Color(0xffff5f6d),
-                           Color(0xffff5f6d),
-                           Color(0xffffc371),
-                          ],
-                        ),
-                        
-                         
+                          borderRadius: BorderRadius.circular(6),                                                 
+                         color: Colors.indigo.shade500
                         ),
                         child: Container(
                           alignment: Alignment.center,
                           
                           constraints:const BoxConstraints(
                             maxWidth: double.infinity,
-                            minHeight: 50
+                            minHeight: 40
                           ),
                           
-                          child: const Text('Sign UP',
+                          child: const Text('Sign up',
                           style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
                           textAlign:TextAlign.center,
                           ),
                         ),  
                         ),
                           ),
                     ),
-                    const SizedBox(height: 4,),
-                    Container(
-                      height: 30,
-                      width: 350,
-                      color: Colors.indigo[100],
-                      child: TextButton(
-                        onPressed: (){},
-                        style: OutlinedButton.styleFrom(
-                          
-                        shape :RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                        ),                       
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/images/SandMLogo.png',height: 20,width: 30,),
-                          const  SizedBox(width: 10,),
-                           const Text('Signup with S&M',
-                            style: TextStyle(
-                              color: Colors.indigo,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            ),
-                          ],                      
+                   Row(
+                           mainAxisAlignment: MainAxisAlignment.start,
+                           children: [
+                             Column(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: [
+                                 Container(
+                                  height: 50,
+                                  width: 130,                              
+                                  child: const Divider(color: Colors.white54, ),
                         ),
-                    ),
-                    ),
-                                  const SizedBox(height: 4,),
-                                  ],                                          
+                               ],
+                             ),
+                             Column(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: const[
+                                 Padding(
+                                   padding: EdgeInsets.all(21.5),
+                                   child: Text('or',
+                                   style: TextStyle(
+                                     fontSize: 26,
+                                     color: Colors.white54,
+                                     fontWeight: FontWeight.w500
+                                   ),),
+                                 )
+                               ],
+                             ),
+                              Column(
+                               mainAxisAlignment: MainAxisAlignment.end,                               
+                               children: [
+                                 Container(
+                                  height: 50,
+                                  width: 130,                              
+                                  child:const Divider(color: Colors.white54, ),
+                        ),
+                               ],
+                             ),
+                           ],
+                         ),                                          
+                    Container(
+                      height: 57,
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed:() {                         
+                                                                                                                                                                                 
+                          },
+                         style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),),),
+                        ),
+                        child: Ink(decoration:  BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),                                                 
+                          color:const Color.fromRGBO(213,76,63,1)
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,                          
+                          constraints:const BoxConstraints(
+                            maxWidth: double.infinity,
+                            minHeight: 50
+                          ),
+                          
+                           child: Row(                            
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/google.png',height: 40,width: 50,),                              
+                               const  Text('Signup with Google',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                ),
+                              ],                      
+                            ),
+                        ),  
+                        ),
+                       ),
+                    ),               
+                   ],                                          
                   ),
-              Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: Row(
-                    
+                 ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Row(                    
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      const  Text('I am already a member',style: TextStyle(fontWeight: FontWeight.bold), ),
+                      const  Text('Already have an account?',style: TextStyle(color:Colors.white54), ),
                        const  SizedBox(width: 8,),
                         GestureDetector(
                           onTap: (){
@@ -271,9 +372,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                           
                           child:
-                           const Text('Login',  style: TextStyle(
-                             fontWeight: FontWeight.bold,
-                             color: Colors.indigo),
+                           const Text('Login here',  style: TextStyle(
+                             fontWeight: FontWeight.w600,
+                             fontSize: 16,
+                             color: Colors.white70),
                              ),
                         ) 
                       ],

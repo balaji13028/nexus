@@ -9,8 +9,9 @@ import '../screens/home_screen.dart';
 
 enum ImageSourceType { gallery, camera }
 class EditProfile extends StatefulWidget {
-  final type;
- EditProfile({ Key? key, this.type,  }) : super(key: key);
+  UserProfileData details;
+
+ EditProfile({ Key? key, required this.details}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -43,24 +44,31 @@ class _EditProfileState extends State<EditProfile> {
   }
 
  void  takephoto(source) async {
-                var source = type == ImageSourceType.camera
-                    ? ImageSource.camera
-                    : ImageSource.gallery;
+                                                  
                 XFile image = await imagePicker.pickImage(
-                    source: source, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
+                    source:ImageSource.camera, imageQuality: 100, preferredCameraDevice: CameraDevice.rear);
                 setState(() {
                   _image = File(image.path);
                 });                 
                 
               }   
 
+void  galleryphoto(source) async {
+                                              
+                XFile image = await imagePicker.pickImage(
+                    source:ImageSource.gallery, imageQuality: 100, preferredCameraDevice: CameraDevice.rear);
+                setState(() {
+                  _image = File(image.path);
+                });                 
+                
+              }   
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
-        backgroundColor: Colors.deepPurple.shade500,
+        backgroundColor: Color.fromRGBO(39, 105, 170, 1), 
         centerTitle: true,
       ),
       body: Padding(
@@ -77,30 +85,25 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       Stack(
                         children: [
-                        Container(     
-                        child:
-                        CircleAvatar(
-                          radius: 70,
-                          backgroundColor: Colors.black,
+                        Container(                                                                              
                           child: CircleAvatar(
                             radius: 68,
                           child: ClipOval(                                                     
                           child:(_image != null)
-                          ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,)
-                          : Image.asset(details[0].image,fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
+                          ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.378,)
+                          : Image.file(File(widget.details.image!),fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
                         ),
-                      ), 
-                     ),
+                      ),                      
                    ), 
                   ),
                      Positioned(
-                        bottom: 4,
-                        right: 3,
+                        bottom: 3,
+                        right: 1,
                         child: Container(
-                          height: 48,
-                          width: 48,
+                          height: 42,
+                          width: 42,
                           decoration: BoxDecoration(
-                            color: Colors.blue.shade300,
+                            color: Colors.deepPurple.shade500,
                             borderRadius: BorderRadius.circular(50),
                           ),
                            child: InkWell(
@@ -111,8 +114,8 @@ class _EditProfileState extends State<EditProfile> {
                             },
                             child: 
                            const Icon(Icons.camera_alt,
-                            color: Colors.white70,
-                            size: 32,),
+                            color: Colors.white,
+                            size: 24,),
                           ),
                         ),
                       )
@@ -127,7 +130,7 @@ class _EditProfileState extends State<EditProfile> {
                 child: Column(
                  children: [
                   TextFormField(
-                    initialValue: details[0].roles,
+                    initialValue: widget.details.role,
                           decoration: InputDecoration(                         
                             labelText: 'Who you are?',
                             labelStyle:  TextStyle(
@@ -163,7 +166,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                           const SizedBox(height: 12,),
                   TextFormField(
-                    initialValue: details[0].fullName,
+                    initialValue: widget.details.firstName,
                           decoration: InputDecoration(                         
                             labelText: 'First Name',
                             labelStyle:  TextStyle(
@@ -199,7 +202,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                           const SizedBox(height: 12,),
                           TextFormField(
-                            initialValue: details[0].lastName,
+                            initialValue: widget.details.lastName,
                           decoration: InputDecoration(
                             labelText: 'Last Name',
                             labelStyle:  TextStyle(
@@ -226,7 +229,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
-                            initialValue: '${details[0].number}',
+                            initialValue: '${widget.details.number}',
                           decoration: InputDecoration(
                             labelText: 'Contact No',
                             labelStyle:  TextStyle(
@@ -264,7 +267,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
-                            initialValue: details[0].emailId,
+                            initialValue: widget.details.emailId,
                           decoration: InputDecoration(
                             labelText: 'Email ID',
                             labelStyle:  TextStyle(
@@ -301,7 +304,7 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(height: 12,),
                            
                           TextFormField(
-                            initialValue: '${details[0].flatNo}',
+                            initialValue: '${widget.details.flatNo}',
                           decoration: InputDecoration(
                             labelText: 'Flat No',
                             labelStyle:  TextStyle(
@@ -330,13 +333,13 @@ class _EditProfileState extends State<EditProfile> {
                             }                            
                              return null;
                           },
-                          onChanged: (value) => _ventureName = value,
+                          onChanged: (value) => _flatNo = value,
                           
                           
                           ),
                          const  SizedBox(height: 12,),
                           TextFormField(
-                            initialValue: details[0].blockName,
+                            initialValue: widget.details.blockName,
                           decoration: InputDecoration(
                             labelText: 'Block No',
                             labelStyle:  TextStyle(
@@ -369,7 +372,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
-                            initialValue: details[0].ventureName,
+                            initialValue:widget.details.ventureName,
                           decoration: InputDecoration(
                             labelText: 'Venture Name',
                             labelStyle:  TextStyle(
@@ -398,7 +401,7 @@ class _EditProfileState extends State<EditProfile> {
                             }                            
                              return null;
                           },
-                          onChanged: (value) => _flatNo = value,
+                          onChanged: (value) => _ventureName = value,
                           ),
                         const SizedBox(height: 12,),
                         RadioButtons(),                                                 
@@ -450,18 +453,20 @@ class _EditProfileState extends State<EditProfile> {
      );
   }
   Widget bottomSheet(){
-    return Container(
-      height: 100,
+    return Container(      
+      height: 110,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('Choose Profile Photo',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 21,
+            fontWeight: FontWeight.w500
           ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 18,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -471,8 +476,14 @@ class _EditProfileState extends State<EditProfile> {
                  }, 
                 child: Column(
                   children:const [
-                     Icon(Icons.camera),
-                     Text('Camera'),
+                     Icon(Icons.camera,
+                     size: 33,
+                     color: Colors.indigo,),
+                     Text('Camera',
+                     style: TextStyle(
+                       color: Colors.black
+                     ),
+                     ),
                   ],
                 )
                
@@ -481,13 +492,19 @@ class _EditProfileState extends State<EditProfile> {
             const  SizedBox(width: 20,),
               TextButton(
                  onPressed: (){
-                takephoto(ImageSourceType.gallery);
+                galleryphoto(ImageSourceType.gallery);
                  }, 
                 child: Column(
                   children: const[
-                     Icon(Icons.image,),
+                     Icon(Icons.image,
+                     size: 33,
+                     color: Colors.indigo,
+                     ),
                      //color: Colors.black,
-                     Text('Gallery'),
+                     Text('Gallery',
+                     style: TextStyle(
+                       color: Colors.black
+                     ),),
                   ],
                 )
                

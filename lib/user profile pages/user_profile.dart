@@ -1,20 +1,22 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 
 
 class ViewProfile extends StatelessWidget {
-  final ViewProfileData details;
-  const ViewProfile({ Key? key, required this.details}) : super(key: key);
+  UserProfileData details;
+  ViewProfile({ Key? key, required this.details}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
   
-    
+    Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Colors.deepPurple.shade500,
+        title:const Text('Profile'),
+        backgroundColor: const Color.fromRGBO(39, 105, 170, 1), 
         centerTitle: true,
       ),
       body: Container(
@@ -27,11 +29,13 @@ class ViewProfile extends StatelessWidget {
                  
                   CircleAvatar(                  
                   radius: 60.0,
-                  backgroundColor: Colors.deepPurple.shade500,
+                  backgroundColor: const Color.fromRGBO(39, 105, 170, 1), 
                   child: CircleAvatar(
                   radius: 59,
-                  
-                  backgroundImage: AssetImage(details.image),     
+                  child: ClipOval(
+                    child: Image.file(File(details.image!),fit: BoxFit.cover,width: size.width*0.34,),
+                  ),
+                    
                   ),          
                   ),
                 ],
@@ -39,7 +43,7 @@ class ViewProfile extends StatelessWidget {
             const SizedBox(height: 2,),            
              Padding(
                padding: const EdgeInsets.all(8.0),
-               child: Text(details.fullName,
+               child: Text(details.firstName!,
                style: const TextStyle(
                  fontSize: 22,
                  color: Colors.indigo,
@@ -52,7 +56,7 @@ class ViewProfile extends StatelessWidget {
                mainAxisAlignment: MainAxisAlignment.center,
                children: [
                  
-                 Text(details.roles,
+                 Text(details.role!,
                  style: const  TextStyle(
                    fontSize: 18,
                    color: Color.fromARGB(255, 34, 75, 136)
@@ -131,7 +135,7 @@ class ViewProfile extends StatelessWidget {
                                        fontSize: 12,
                                       color: Colors.white70
                                   ),),
-                                     Text(details.emailId,
+                                     Text(details.emailId!,
                                      style: const TextStyle(
                                      fontSize: 20,
                                      color: Colors.white70,
@@ -160,7 +164,7 @@ class ViewProfile extends StatelessWidget {
                                        fontSize: 12,
                                       color: Colors.white70
                                   ),),
-                                     Text(details.gender,
+                                     Text(details.gender!,
                                      style: const TextStyle(
                                      fontSize: 20,
                                      color: Colors.white70,
@@ -217,8 +221,9 @@ class ViewProfile extends StatelessWidget {
                                  const SizedBox(width: 30,),
                                Column(
                                  mainAxisAlignment: MainAxisAlignment.start,
+                                 crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
-                                   const  Text('Flat No :',
+                                    const Text('Flat No :',
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white70
@@ -248,7 +253,7 @@ class ViewProfile extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                    children: [
-                                     const Text('Block No :  ',
+                                     const Text('Block Name :  ',
                                 style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white70
@@ -279,13 +284,13 @@ class ViewProfile extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
-                                   const Text('Area Name: ',
+                                   const Text('Venture Name: ',
                                      style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white70
                                      ),
                                     ),
-                                  Text(details.ventureName,
+                                  Text(details.ventureName!,
                                     style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.white70

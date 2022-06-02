@@ -1,19 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/api_url.dart';
+import 'package:flutter_application/models/visitor_details_model.dart';
 import 'package:flutter_application/widgets/radio_buttons.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/user_details_model.dart';
-
 import '../screens/home_screen.dart';
 
 
 enum ImageSourceType { gallery, camera }
 class NewUser extends StatefulWidget {
-  final type;
   
-
- NewUser({ Key? key, this.type,  }) : super(key: key);
+  const  NewUser({ Key? key,  }) : super(key: key);
 
   @override
   State<NewUser> createState() => _NewUserState();
@@ -22,6 +21,15 @@ class NewUser extends StatefulWidget {
 class _NewUserState extends State<NewUser> {
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController firstnamecontr=TextEditingController();
+  TextEditingController lastnamecontr=TextEditingController();
+  TextEditingController numbercontr=TextEditingController();
+  TextEditingController rolecontr=TextEditingController();
+  TextEditingController emailcontr=TextEditingController();
+  TextEditingController blockcontr=TextEditingController();
+  TextEditingController venturecontr=TextEditingController();
+  TextEditingController flatcontr=TextEditingController();
+  TextEditingController gendercontr=TextEditingController();
   String _fullName = '';
 
   String _lastName = '';
@@ -35,30 +43,40 @@ class _NewUserState extends State<NewUser> {
   String _blockName = '';
 
   String _flatNo = '';
+  String _role='';
+  String gender='';
+   String _selectedGender = '';
 
   var _image;
   var imagePicker;
-  var type;
+  
   
   @override
   void initState() {
     super.initState();
     imagePicker = new ImagePicker();
   }
-  
-
- 
-    void  takephoto(source) async {
-                var source = type == ImageSourceType.camera
-                    ? ImageSource.camera
-                    : ImageSource.gallery;
+   
+    void  takephoto(source) async {            
+         
                 XFile image = await imagePicker.pickImage(
-                    source: source, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
+                    source: ImageSource.camera, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
                 setState(() {
                   _image = File(image.path);
                 });                 
                 
               }   
+
+    void  galleryphoto(source) async {
+              
+                XFile image = await imagePicker.pickImage(
+                    source: ImageSource.gallery, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
+                setState(() {
+                  _image = File(image.path);
+                });                 
+                
+              }   
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +92,7 @@ class _NewUserState extends State<NewUser> {
           ),
          ),
          centerTitle: true,      
-         backgroundColor: Colors.deepPurple,
+         backgroundColor: Color.fromRGBO(39, 105, 170, 1), 
           ),
        body: Padding(
         padding:const EdgeInsets.symmetric(horizontal: 26,),      
@@ -99,21 +117,21 @@ class _NewUserState extends State<NewUser> {
                             radius: 68,
                           child: ClipOval(                                                     
                             child:(_image != null)
-                           ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,)
-                           : Image.asset('assets/images/2.png',                                                                         
+                           ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.380,)
+                           : Image.asset('assets/images/download.png',                                                                         
                           ),
                          ),
                        ),
                      ),  
                     ),
                      Positioned(
-                        bottom: 4,
-                        right: 3,
+                        bottom: 4,                       
+                        right: 2,                       
                         child: Container(
-                          height: 48,
-                          width: 48,
+                          height: 42,
+                          width: 42,
                           decoration: BoxDecoration(
-                            color: Colors.blue.shade300,
+                            color: Colors.black,
                             borderRadius: BorderRadius.circular(50),
                           ),
                            child: InkWell(
@@ -124,8 +142,8 @@ class _NewUserState extends State<NewUser> {
                             },
                             child: 
                            const Icon(Icons.camera_alt,
-                            color: Colors.white70,
-                            size: 32,),
+                            color: Colors.white,
+                            size: 26,),
                             
                            ),
                           ),
@@ -141,6 +159,7 @@ class _NewUserState extends State<NewUser> {
                  child: Column(
                    children: [
                      TextFormField(
+                       controller: rolecontr,
                           decoration: InputDecoration(
                             labelText: 'Who Are You?',
                             labelStyle:  TextStyle(
@@ -164,10 +183,11 @@ class _NewUserState extends State<NewUser> {
                              floatingLabelBehavior : FloatingLabelBehavior.auto,
                             ),
                             
-                          onChanged: (value) => _fullName=value,
+                          onChanged: (value) => _role=value,
                         ),
                           const SizedBox(height: 12,),
                       TextFormField(
+                        controller: firstnamecontr,
                           decoration: InputDecoration(
                             labelText: 'First Name',
                             labelStyle:  TextStyle(
@@ -202,6 +222,7 @@ class _NewUserState extends State<NewUser> {
                         ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            controller: lastnamecontr,
                            decoration: InputDecoration(
                             labelText: 'Last Name',
                             labelStyle:  TextStyle(
@@ -223,11 +244,17 @@ class _NewUserState extends State<NewUser> {
                              ),
                            ),
                              floatingLabelBehavior : FloatingLabelBehavior.auto,
-                            ),
-                          
+                            ),validator: (value){
+                            if(value== null ||  value.trim().isEmpty){
+                              return 'Enter your Name';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) => _lastName=value,
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            controller: numbercontr,
                             decoration: InputDecoration(
                             labelText: 'Mobile Number',
                             labelStyle:  TextStyle(
@@ -265,6 +292,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            controller: emailcontr,
                            decoration: InputDecoration(
                              labelText: 'Email ID',
                              labelStyle:  TextStyle(
@@ -300,6 +328,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),                           
                           TextFormField(
+                            controller: venturecontr,
                             decoration: InputDecoration(
                             labelText: 'Venture Name',
                             labelStyle:  TextStyle(
@@ -335,6 +364,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            controller: blockcontr,
                           decoration: InputDecoration(
                             labelText: 'Block Name',
                             labelStyle:  TextStyle(
@@ -367,7 +397,8 @@ class _NewUserState extends State<NewUser> {
                           onChanged: (value) => _blockName = value,
                           ),
                           const SizedBox(height: 12,),
-                          TextFormField(                            
+                          TextFormField(   
+                            controller: flatcontr,                         
                             decoration: InputDecoration(
                             labelText: 'Flat No:',
                             labelStyle:  TextStyle(
@@ -400,7 +431,47 @@ class _NewUserState extends State<NewUser> {
                           onChanged: (value) => _flatNo = value,
                           ),
                           const SizedBox(height: 12,),
-                         const RadioButtons(),                                                 
+                         Container(
+      child: Column(
+          
+            children: [
+             
+              ListTile(
+                
+                leading: Radio<String>(
+                  value: 'Male',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                     gendercontr.text = 'Male';
+                                     
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                
+                ),
+                
+                title: const Text('Male'),
+              ),
+              
+              ListTile(
+                leading: Radio<String>(
+                  value: 'Female',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                     gendercontr.text = 'Female';
+                    setState(() {
+                      _selectedGender = value!;
+                      
+                    });
+                  },
+                ),
+                title: const Text('Female'),
+              ),
+            ])
+
+    
+    ),                                              
                         ],
                      ), 
                     ),
@@ -434,8 +505,24 @@ class _NewUserState extends State<NewUser> {
                               if(
                           _formKey.currentState!.validate()){
                           _formKey.currentState!.save();
-                          Navigator.pop(context);
-                        }                        
+                          // newUser.image=_image.path;
+                          // newUser.role=_role;
+                        
+                          // newUser.firstName=_fullName;
+                          // newUser.lastName=_lastName;
+                          // newUser.number=_number;
+                          // newUser.emailId=_userEmail;
+                          // newUser.gender='male';
+                          // newUser.flatNo=_flatNo;
+                          // newUser.blockName=_blockName;
+                          // newUser.ventureName=_ventureName;
+                          // insertUser(newUser);
+                          // user();
+                          userApi(firstnamecontr.text, lastnamecontr.text, rolecontr.text,numbercontr.text, emailcontr.text, _image.path, venturecontr.text, blockcontr.text, flatcontr.text, gendercontr.text);
+                         Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                       }
+                                         
                        }                                                  
                      ),
                   ),      
@@ -447,18 +534,20 @@ class _NewUserState extends State<NewUser> {
   }
 
   Widget bottomSheet(){
-    return Container(
-      height: 100,
+    return Container(      
+      height: 110,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('Choose Profile Photo',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 21,
+            fontWeight: FontWeight.w500
           ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 18,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -468,8 +557,14 @@ class _NewUserState extends State<NewUser> {
                  }, 
                 child: Column(
                   children:const [
-                     Icon(Icons.camera),
-                     Text('Camera'),
+                     Icon(Icons.camera,
+                     size: 33,
+                     color: Colors.indigo,),
+                     Text('Camera',
+                     style: TextStyle(
+                       color: Colors.black
+                     ),
+                     ),
                   ],
                 )
                
@@ -478,13 +573,19 @@ class _NewUserState extends State<NewUser> {
             const  SizedBox(width: 20,),
               TextButton(
                  onPressed: (){
-                takephoto(ImageSourceType.gallery);
+                galleryphoto(ImageSourceType.gallery);
                  }, 
                 child: Column(
                   children: const[
-                     Icon(Icons.image,),
+                     Icon(Icons.image,
+                     size: 33,
+                     color: Colors.indigo,
+                     ),
                      //color: Colors.black,
-                     Text('Gallery'),
+                     Text('Gallery',
+                     style: TextStyle(
+                       color: Colors.black
+                     ),),
                   ],
                 )
                
