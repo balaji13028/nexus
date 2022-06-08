@@ -1,17 +1,17 @@
 
-import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/visitor_details_model.dart';
-import 'package:flutter_application/visistors%20page/visitor_out-time_details.dart';
+import 'package:flutter_application/visistors%20page/visitor_out_time_details.dart';
 import 'package:intl/intl.dart';
 
 
+
+// ignore: must_be_immutable
 class ViewVisitorProfile extends StatefulWidget {
   VisitorData visitor;
 
-  
- 
 ViewVisitorProfile({ Key? key, required this.visitor,}) : super(key: key);
 
   @override
@@ -20,39 +20,47 @@ ViewVisitorProfile({ Key? key, required this.visitor,}) : super(key: key);
 
 class _ViewVisitorProfileState extends State<ViewVisitorProfile> {
   
+ // ignore: prefer_typing_uninitialized_variables
  var intime;
+ var decodeBytes;
  String _timeasString = DateTime.now().toString();
- String _timeasString1 = DateTime.now().toString();
- int _timeasInt = 0;
+
 Timer ?_timer;
 String outtimer='';
 String outdater='';
 
 @override 
 void initState() {
-  
-  intime=DateTime.parse('${widget.visitor.inDate!} ${widget.visitor.inTime!}');
+ decodeBytes = base64Decode(widget.visitor.visitorImage!);
+
+
+  var stringdateandtime= ('${widget.visitor.inDate!} ${widget.visitor.inTime!}');
+  /* now convert date and time string to datetime format */
+  intime=DateTime.parse(stringdateandtime);
+  print('time 2 is $intime');
 
   _timeasString = DateFormat("kk:mm:ss").format(intime);
-  _timeasString1= DateFormat("yyyy-MM-dd").format(intime);
-   _timer=Timer.periodic(const Duration(seconds: 1),( Timer t){
-    _getDuration(intime);    
-  }    
-  );
-  super.initState();
-}
+   
+      _timer=Timer.periodic(const Duration(seconds: 1),( Timer t){
+       _getDuration(intime);
+     }    
+    );
+     super.initState();
+   }
 
-void _getDuration(time1){
+ void _getDuration(time){
 
-Duration timeelapsed = DateTime.now().difference(time1);
-if(!mounted) return;
-    setState(() {
+ Duration timeelapsed = DateTime.now().difference(time);
+
+ if(!mounted) return;
+     setState(() {
       _timeasString = timeelapsed.toString().split(".")[0];
       
-      _timeasInt = timeelapsed.inMinutes;   
+      // _timeasInt = timeelapsed.inMinutes;   
 
-    });               
-}
+     });               
+ 
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -61,25 +69,26 @@ if(!mounted) return;
       appBar: AppBar(
         title: const Text('Visitor Profile'),      
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(39, 105, 170, 1), 
+        backgroundColor:const Color.fromRGBO(39, 105, 170, 1), 
       ),
       resizeToAvoidBottomInset: false,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15,),
+        color: Colors.grey,
         child: ListView(
           children:[
              Column(                       
             children:[ 
-             const Padding(padding: EdgeInsets.only(top: 6)),           
+             const Padding(padding: EdgeInsets.only(top: 25)),           
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,                
                   children: [                                  
                     CircleAvatar(                  
-                    radius: 70.0,
-                    backgroundColor: Colors.deepPurple.shade500, 
+                    radius: 65.0,
+                   backgroundColor:Colors.black,
                      child:ClipOval(
-                       child: Image.file(File(widget.visitor.visitorImage!),
-                       fit: BoxFit.cover,width: 136,height: 136,),
+                       child: (widget.visitor.visitorImage == null)? Image.asset('assets/images/person.jpg'): Image.memory(decodeBytes,
+                       fit: BoxFit.cover,width: 125,height: 125,),
                      ),                                             
                     ),
                   ],
@@ -88,7 +97,8 @@ if(!mounted) return;
                    Text(widget.visitor.visitorName!,
                    style: TextStyle(
                    fontSize: 22,
-                   color: Colors.indigo.shade400,
+                   letterSpacing: 1.1,
+                   color: Colors.blue.shade900,
                    fontWeight: FontWeight.bold,                 
                  ),
                  ),             
@@ -257,7 +267,7 @@ if(!mounted) return;
                                     ),
                                      Text(widget.visitor.inTime!,
                                          style:const TextStyle(
-                                         fontSize: 16,
+                                         fontSize: 18,
                                          color: Colors.white70,                          
                                     ),
                                     ),
@@ -292,7 +302,7 @@ if(!mounted) return;
                                       ),
                                        Text(widget.visitor.outTime!,                                    
                                        style: const TextStyle(
-                                       fontSize: 16,
+                                       fontSize: 18,
                                        color: Colors.white70,
                                       ),
                                      
@@ -336,29 +346,34 @@ if(!mounted) return;
                         ),
                       ),
                     ), 
-                   const  SizedBox(height: 15,),
-                    ElevatedButton(                      
-                      child:const Text('Exit',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      ),
-                      onPressed: (){
-                       _timer!.cancel();
-                         setState(() {
-                           outtimer= DateFormat('kk:mm:ss').format(DateTime.now()).toString();
-                           outdater= DateFormat('yyyy:MM:dd').format(DateTime.now()).toString();
-                         });                                                 
-                        //  widget.visitor.outTime=outtimer.toString();
-                        //  widget.visitor.outDate=outdater.toString();
-                        //  widget.visitor.timeElapsed=_timeasString;                         
-                        //  insertVisitor(widget.visitor);
-                         
-                         Navigator.push(
-                         context, MaterialPageRoute(builder: (context) =>  VisitorTimingDetails(visitor: widget.visitor,))
-                         );
-                      }
-                   )
+                   const  SizedBox(height: 30,),
+                    Container(
+                      height: 38,
+                      width: 140,
+                      child: ElevatedButton(                                        
+                        child:const Text('Exit',
+                        style: TextStyle(                          
+                          fontSize: 22,
+                        ),
+                        ),
+                        onPressed: (){
+                         _timer!.cancel();
+                           setState(() {
+                             outtimer= DateFormat('kk:mm:ss').format(DateTime.now()).toString();
+                             outdater= DateFormat('yyyy:MM:dd').format(DateTime.now()).toString();
+                           });                                                 
+                           widget.visitor.outTime=outtimer;
+                            widget.visitor.outDate=outdater;
+                            widget.visitor.timeElapsed=_timeasString;                         
+                           
+                           
+                           Navigator.push(
+                           context, MaterialPageRoute(builder: (context) =>  VisitorTimingDetails(visitor: widget.visitor,))
+                           );
+                        }
+                   ),
+                    ),
+                    const SizedBox(height: 45,),
                ]
              ),
           ]

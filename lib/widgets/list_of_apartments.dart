@@ -1,11 +1,12 @@
-import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application/models/apartment-model.dart';
+import 'package:flutter_application/models/apartment_model.dart';
 
 import '../apartments/apartment_details.dart';
 
 
 
+// ignore: must_be_immutable
 class ListOfApartments extends StatelessWidget {
 
    List<ApartmentData> details;
@@ -15,6 +16,7 @@ class ListOfApartments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      // ignore: avoid_print
       print('list of flats  ${details.length}');     
     return Card(      
      margin:const EdgeInsets.symmetric(horizontal: 14.0,vertical: 6,),

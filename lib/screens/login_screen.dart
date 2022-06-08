@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/models/user_details_model.dart';
 import 'package:flutter_application/screens/sign_up_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../api_url.dart';
-import '../models/visitor_details_model.dart';
-
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,8 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool showPassword = true;
 
+  // ignore: unused_field
   String _userName = '';
 
+  // ignore: unused_field
   String _password = '';
 
   @override
@@ -33,19 +32,21 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  @override
+  
   // This function is triggered when the user press the "Sign Up" button
+  // ignore: unused_element
   void _trySubmitForm(BuildContext context) {
     final bool? isValid = _formKey.currentState?.validate();
     if (isValid == true) {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => const HomeScreen(),
           ));
     }
   }
 
+  // ignore: unused_element
   void _showToast(status) {
     Fluttertoast.showToast(
       msg: "user doesn't exist ? Create an acoount", // message
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       'Welcome',
                       style:
-                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.w500,color: Colors.white),
                     ),
                     const SizedBox(
                       height: 6,
@@ -114,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                       
                         controller: _namecontroller,
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
@@ -133,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -226,16 +228,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 22,
                       ),
+                      // ignore: avoid_unnecessary_containers
                       Container(
                         child: TextButton(
                           onPressed: () async {
-                            flatResponse();
-                          
-                             Navigator.push(
+                          await flatResponse();
+                          await noticesResponse();
+                          await visitorsResponse();
+                          await usersResponse(); 
+                            Navigator.push(
                                      context,
                                     MaterialPageRoute(
-                                       builder: (context) => HomeScreen(),
+                                       builder: (context) => const HomeScreen(),
                                    ));
+                         
+                          
                           },
                             
                           //   String stat = await userLogin(
@@ -301,6 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              // ignore: sized_box_for_whitespace
                               Container(
                                 height: 50,
                                 width: 130,
@@ -328,6 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              // ignore: sized_box_for_whitespace
                               Container(
                                 height: 50,
                                 width: 130,

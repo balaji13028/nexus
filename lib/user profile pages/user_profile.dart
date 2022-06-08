@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 
 
+// ignore: must_be_immutable
 class ViewProfile extends StatelessWidget {
   UserProfileData details;
   ViewProfile({ Key? key, required this.details}) : super(key: key);

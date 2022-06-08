@@ -2,10 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
-import 'package:flutter_application/models/visitor_details_model.dart';
-import 'package:flutter_application/widgets/radio_buttons.dart';
 import 'package:image_picker/image_picker.dart';
-import '../models/user_details_model.dart';
 import '../screens/home_screen.dart';
 
 
@@ -30,49 +27,54 @@ class _NewUserState extends State<NewUser> {
   TextEditingController venturecontr=TextEditingController();
   TextEditingController flatcontr=TextEditingController();
   TextEditingController gendercontr=TextEditingController();
+  // ignore: unused_field
   String _fullName = '';
-
+// ignore: unused_field
   String _lastName = '';
-
+// ignore: unused_field
   String _number = '';  
-
+// ignore: unused_field
   String _userEmail = '';
-
+// ignore: unused_field
   String _ventureName = '';
-
+// ignore: unused_field
   String _blockName = '';
-
+// ignore: unused_field
   String _flatNo = '';
+  // ignore: unused_field
   String _role='';
   String gender='';
    String _selectedGender = '';
 
+  // ignore: prefer_typing_uninitialized_variables
   var _image;
+  // ignore: prefer_typing_uninitialized_variables
   var imagePicker;
   
   
   @override
   void initState() {
+    
     super.initState();
-    imagePicker = new ImagePicker();
+    imagePicker = ImagePicker();
   }
    
     void  takephoto(source) async {            
          
-                XFile image = await imagePicker.pickImage(
+              final image = await imagePicker.pickImage(
                     source: ImageSource.camera, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
                 setState(() {
-                  _image = File(image.path);
+                  _image = File(image!.path);
                 });                 
                 
               }   
 
     void  galleryphoto(source) async {
               
-                XFile image = await imagePicker.pickImage(
+                final image = await imagePicker.pickImage(
                     source: ImageSource.gallery, imageQuality: 50, preferredCameraDevice: CameraDevice.front);
                 setState(() {
-                  _image = File(image.path);
+                  _image = File(image!.path);
                 });                 
                 
               }   
@@ -92,7 +94,7 @@ class _NewUserState extends State<NewUser> {
           ),
          ),
          centerTitle: true,      
-         backgroundColor: Color.fromRGBO(39, 105, 170, 1), 
+         backgroundColor: const Color.fromRGBO(39, 105, 170, 1), 
           ),
        body: Padding(
         padding:const EdgeInsets.symmetric(horizontal: 26,),      
@@ -108,6 +110,7 @@ class _NewUserState extends State<NewUser> {
                   children: [
                      Stack(
                       children: [
+                        // ignore: avoid_unnecessary_containers
                         Container(     
                          child:
                           CircleAvatar(
@@ -137,7 +140,8 @@ class _NewUserState extends State<NewUser> {
                            child: InkWell(
                             onTap: (){
                              showModalBottomSheet(context: context,
-                              builder:((Builder) => bottomSheet()),
+                              // ignore: avoid_types_as_parameter_names
+                              builder:((builder) => bottomSheet()),
                              );
                             },
                             child: 
@@ -153,12 +157,15 @@ class _NewUserState extends State<NewUser> {
                     ],
                   ),                  
             const SizedBox(height:30 ,),
+             // ignore: avoid_unnecessary_containers
              Container(          
               child: Form(
                 key: _formKey,
                  child: Column(
                    children: [
                      TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                       keyboardType: TextInputType.text,
                        controller: rolecontr,
                           decoration: InputDecoration(
                             labelText: 'Who Are You?',
@@ -187,6 +194,7 @@ class _NewUserState extends State<NewUser> {
                         ),
                           const SizedBox(height: 12,),
                       TextFormField(
+                         textCapitalization: TextCapitalization.words,
                         controller: firstnamecontr,
                           decoration: InputDecoration(
                             labelText: 'First Name',
@@ -213,8 +221,6 @@ class _NewUserState extends State<NewUser> {
                             validator: (value){
                             if(value== null ||  value.trim().isEmpty){
                               return 'Enter your Name';
-                            }if(value.trim().length<4){
-                              return 'Full name must be at least 4 charcters';
                             }
                             return null;
                           },
@@ -222,6 +228,7 @@ class _NewUserState extends State<NewUser> {
                         ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                             textCapitalization: TextCapitalization.words,
                             controller: lastnamecontr,
                            decoration: InputDecoration(
                             labelText: 'Last Name',
@@ -254,6 +261,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            keyboardType: TextInputType.phone,
                             controller: numbercontr,
                             decoration: InputDecoration(
                             labelText: 'Mobile Number',
@@ -292,6 +300,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             controller: emailcontr,
                            decoration: InputDecoration(
                              labelText: 'Email ID',
@@ -364,6 +373,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            keyboardType: TextInputType.streetAddress,
                             controller: blockcontr,
                           decoration: InputDecoration(
                             labelText: 'Block Name',
@@ -398,6 +408,7 @@ class _NewUserState extends State<NewUser> {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(   
+                            keyboardType: TextInputType.number,
                             controller: flatcontr,                         
                             decoration: InputDecoration(
                             labelText: 'Flat No:',
@@ -431,8 +442,9 @@ class _NewUserState extends State<NewUser> {
                           onChanged: (value) => _flatNo = value,
                           ),
                           const SizedBox(height: 12,),
-                         Container(
-      child: Column(
+                        Container(
+                           child: 
+               Column(
           
             children: [
              
@@ -470,19 +482,20 @@ class _NewUserState extends State<NewUser> {
               ),
             ])
 
-    
+           
     ),                                              
-                        ],
+          ]
                      ), 
                     ),
                   ),       
               const SizedBox(height: 25,),
+                // ignore: sized_box_for_whitespace
                 Container(          
                   height: 60,                    
                   child: TextButton(                                                                                                                                                                                                                                                
                      child: Ink(decoration:  BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                           color: Colors.indigoAccent                                                 
+                           color:  const Color.fromRGBO(39, 105, 170, 1),                                              
                           ),
                           child: Container(
                             alignment: Alignment.center,
@@ -495,7 +508,7 @@ class _NewUserState extends State<NewUser> {
                             child: const Text('Submit',
                             style: TextStyle(color: Colors.white,
                             fontSize: 21,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             letterSpacing: 0.8),
                             textAlign:TextAlign.center,
                             ),
@@ -518,9 +531,21 @@ class _NewUserState extends State<NewUser> {
                           // newUser.ventureName=_ventureName;
                           // insertUser(newUser);
                           // user();
-                          userApi(firstnamecontr.text, lastnamecontr.text, rolecontr.text,numbercontr.text, emailcontr.text, _image.path, venturecontr.text, blockcontr.text, flatcontr.text, gendercontr.text);
+                          userApi(
+                           firstnamecontr.text,
+                           lastnamecontr.text,
+                           rolecontr.text,
+                           numbercontr.text,
+                           emailcontr.text, 
+                           venturecontr.text,
+                           blockcontr.text,
+                           flatcontr.text,
+                           gendercontr.text,
+                           _image
+                           );
+                         
                          Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                        }
                                          
                        }                                                  
@@ -601,10 +626,4 @@ class _NewUserState extends State<NewUser> {
     );
 
   }
-
-  
-      
-    
-    
-  
 }

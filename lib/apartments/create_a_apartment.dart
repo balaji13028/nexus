@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
-import 'package:flutter_application/models/apartment-model.dart';
-import 'package:flutter_application/models/visitor_details_model.dart';
-
 import '../screens/home_screen.dart';
 
+// ignore: must_be_immutable
 class CreateApartment extends StatelessWidget {
   CreateApartment({Key? key}) : super(key: key);
 
@@ -15,10 +13,15 @@ final _formKey = GlobalKey<FormState>();
  TextEditingController rolecontroller=TextEditingController();
  TextEditingController floorcontroller=TextEditingController();
  TextEditingController flatcontroller=TextEditingController();
+ // ignore: unused_field
  String _role='';
+ // ignore: unused_field
  String _name='';
+// ignore: unused_field
 String _contactNumber='';
+// ignore: unused_field
 String _flore='';
+// ignore: unused_field
 String _flatNo='';
 
 
@@ -35,7 +38,7 @@ String _flatNo='';
           letterSpacing: 1.0
         ),),
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(39, 105, 170, 1),
+        backgroundColor: const Color.fromRGBO(39, 105, 170, 1),
       ),
        resizeToAvoidBottomInset: false,
       body: Container(
@@ -72,6 +75,7 @@ String _flatNo='';
                           child: Column(
                            children: [ 
                              TextFormField(
+                               textCapitalization: TextCapitalization.words,
                                 style: const TextStyle(color: Colors.white),
                                controller: rolecontroller,
                             decoration: InputDecoration(
@@ -101,6 +105,7 @@ String _flatNo='';
                           ),
                             const SizedBox(height: 12,),                                                
                             TextFormField(
+                              textCapitalization: TextCapitalization.words,
                                style: const TextStyle(color: Colors.white),
                               controller: namecontroller,
                                 decoration: InputDecoration(
@@ -128,8 +133,8 @@ String _flatNo='';
                                    validator: (value){
                                       if(value== null ||  value.trim().isEmpty){
                                         return 'Enter your Name';
-                                      }if(value.trim().length<4){
-                                        return 'Full name must be at least 4 charcters';
+                                      }if(value.trim().length<3){
+                                        return 'Full name must be at least 3 charcters';
                                       }
                                       return null;
                                     },
@@ -176,7 +181,7 @@ String _flatNo='';
                                     },          
                                     onChanged: (value) => _contactNumber=value,
                                   ),
-                                  SizedBox(height: 12,),
+                                  const SizedBox(height: 12,),
                                   TextFormField(
                                      style: const TextStyle(color: Colors.white),
                                      keyboardType: TextInputType.number,
@@ -244,6 +249,7 @@ String _flatNo='';
                                       ), 
                                 
                             const SizedBox(height: 24,),               
+                             // ignore: avoid_unnecessary_containers
                              Container(                                           
                                child: TextButton(                                                                                                                                                                                                                                              
                                  child:Ink(decoration:  BoxDecoration(
@@ -280,6 +286,7 @@ String _flatNo='';
                                     flatApi(namecontroller.text,numbercontroller.text,rolecontroller.text,floorcontroller.text,flatcontroller.text);
                                     flatResponse();
                                   Navigator.push(
+                                    // ignore: prefer_const_constructors
                                     context, MaterialPageRoute(builder: (context) => HomeScreen()));                                                                                                                
                                   
                                          }                                                                                                                                                                          

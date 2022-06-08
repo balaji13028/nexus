@@ -1,11 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
-import 'package:flutter_application/screens/home_screen.dart';
 import 'package:flutter_application/screens/login_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+// ignore: use_key_in_widget_constructors
 class SignUpPage extends StatefulWidget {
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -18,27 +17,16 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController numbercontroller=TextEditingController();
 
   bool showPassword=true;
+  // ignore: unused_field
   String _userEmail = '';
 
+  // ignore: unused_field
   String _userName = '';
 
+  // ignore: unused_field
   String _number = '';
 
 
-
-  // This function is triggered when the user press the "Sign Up" button
-  void _trySubmitForm(BuildContext context) {
-    final bool? isValid = _formKey.currentState?.validate();
-    if(isValid == true){
-      Navigator.push(context, MaterialPageRoute(
-      builder: (context) => LoginScreen(),
-      
-    ));
-    }
-   
-  }
-
- @override
  SignUpPage createState() => SignUpPage();
 
   @override
@@ -77,6 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Column(
                  children: [
                     TextFormField(
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.words,
                       controller: namecontroller,
                       style:const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -103,8 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         validator: (value){
                           if(value== null ||  value.trim().isEmpty){
                             return 'Enter your Name';
-                          }if(value.trim().length<4){
-                            return 'Full name must be at least 4 charcters';
+                          }if(value.trim().length<3){
+                            return 'Full name must be at least 3 charcters';
                           }
                           return null;
                         },
@@ -112,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       const SizedBox(height: 10,),
                       TextFormField(
+                        keyboardType: TextInputType.emailAddress,
                         controller: usercontroller,
                         style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -148,6 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                      const SizedBox(height: 10,),
                       TextFormField(
+                        keyboardType: TextInputType.phone,
                         controller: numbercontroller,
                          style: const TextStyle(color: Colors.white),
                         obscureText: showPassword,
@@ -216,37 +208,38 @@ class _SignUpPageState extends State<SignUpPage> {
                       
                       ),
                     const SizedBox(height: 22,),
+                    // ignore: avoid_unnecessary_containers
                     Container(
                       
                       child: TextButton(
                         onPressed: () async {
 
-                          String value = await Signup(namecontroller.text, usercontroller.text,numbercontroller.text);                       
+                          String value = await Signup(_userName, _userEmail,_number);                       
                             if(value == 'true'){
                               final bool? isValid = _formKey.currentState?.validate();                          
                               if (isValid == true) {
                                 EasyLoading.showSuccess(
                                   "Successfully registered",
-                                  duration: const Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 1200),
                                   dismissOnTap: true
                                 );
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => LoginScreen(),
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen(),
                                ));
                               }
                             } else if(value=="email is existed") {
-                              final bool? isValid =_formKey.currentState?.validate();
+                              _formKey.currentState?.validate();
                               EasyLoading.showToast('This Email is already used',
                                   toastPosition:
                                       EasyLoadingToastPosition.bottom,
                                 );
                             }else if (value=="number is existed"){
-                              final bool? isValid =_formKey.currentState?.validate();
+                              _formKey.currentState?.validate();
                               EasyLoading.showToast('This mobile number is already used',
                                   toastPosition:
                                       EasyLoadingToastPosition.bottom,
                                 );
                             }else{
-                               final bool? isValid =_formKey.currentState?.validate();
+                              _formKey.currentState?.validate();
                               EasyLoading.showToast('Please enter the details',
                                   toastPosition:
                                       EasyLoadingToastPosition.bottom,
@@ -285,6 +278,7 @@ class _SignUpPageState extends State<SignUpPage> {
                              Column(
                                mainAxisAlignment: MainAxisAlignment.start,
                                children: [
+                                 // ignore: sized_box_for_whitespace
                                  Container(
                                   height: 50,
                                   width: 130,                              
@@ -309,6 +303,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               Column(
                                mainAxisAlignment: MainAxisAlignment.end,                               
                                children: [
+                                 // ignore: sized_box_for_whitespace
                                  Container(
                                   height: 50,
                                   width: 130,                              
@@ -318,6 +313,7 @@ class _SignUpPageState extends State<SignUpPage> {
                              ),
                            ],
                          ),                                          
+                    // ignore: sized_box_for_whitespace
                     Container(
                       height: 57,
                       width: double.infinity,

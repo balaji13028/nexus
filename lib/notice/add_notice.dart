@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
-import 'package:flutter_application/models/notice_model.dart';
-import 'package:flutter_application/models/visitor_details_model.dart';
 import 'package:intl/intl.dart';
 
 import '../screens/home_screen.dart';
 
 class AddNotice extends StatefulWidget {
- AddNotice({Key? key}) : super(key: key);
+ const AddNotice({Key? key}) : super(key: key);
 
   @override
   State<AddNotice> createState() => _AddNoticeState();
@@ -15,19 +13,24 @@ class AddNotice extends StatefulWidget {
 
 class _AddNoticeState extends State<AddNotice> {
  final _formKey = GlobalKey<FormState>();
- TextEditingController _titlecontroller  = TextEditingController();
- TextEditingController _desccontroller  = TextEditingController();
- TextEditingController _createdcontroller  = TextEditingController();
-TextEditingController _startcontroller  = TextEditingController();
-TextEditingController _endcontroller  = TextEditingController();
+ final TextEditingController _titlecontroller  = TextEditingController();
+ final TextEditingController _desccontroller  = TextEditingController();
+ final TextEditingController _createdcontroller  = TextEditingController();
+final TextEditingController _startcontroller  = TextEditingController();
+final TextEditingController _endcontroller  = TextEditingController();
+ // ignore: unused_field
  String _title='';
 
+  // ignore: unused_field
   String _description='';
 
+   // ignore: unused_field
    String _startdate='';
 
+    // ignore: unused_field
     String _enddate='';
 
+     // ignore: unused_field
      String _by='';
 
 
@@ -46,6 +49,7 @@ TextEditingController _endcontroller  = TextEditingController();
                 });
               }
                 else{
+                  // ignore: avoid_print
                   print("Date is not selected");
                }
                _startdate=_startcontroller.text;
@@ -66,13 +70,15 @@ TextEditingController _endcontroller  = TextEditingController();
                 });
               }
                 else{
+                  // ignore: avoid_print
                   print("Date is not selected");
                }
                _enddate=_endcontroller.text;
   }
 @override
   void initState() {
-    _startcontroller.text = "--/--/----"; //set the initial value of text field
+    _startcontroller.text = "--/--/----"; 
+     _endcontroller.text = "--/--/----"; //set the initial value of text field
     super.initState();
   }
 
@@ -117,7 +123,7 @@ TextEditingController _endcontroller  = TextEditingController();
                              ),
                              onPressed: (){
                              Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                              context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                              }
                              ),
                            ],
@@ -165,7 +171,7 @@ TextEditingController _endcontroller  = TextEditingController();
                                           fontWeight: FontWeight.w500,
                                         ),)
                                      ],
-                                   ),   
+                                   ),                                 
                               SizedBox(height: size.height*0.003,),
                               Divider(
                                color: Colors.grey.shade500,  
@@ -188,13 +194,14 @@ TextEditingController _endcontroller  = TextEditingController();
                                       ]
                                   ),
                                  SizedBox(width: size.width*0.15,),
-                                  Column(
-                                     
+                                  Column(                                     
                                     children: [
+                                      // ignore: sized_box_for_whitespace
                                       Container(                                      
                                         height: size.height*0.08,
                                         width: size.width*0.65,
                                        child: TextFormField(
+                                         textCapitalization: TextCapitalization.words,
                                         controller: _titlecontroller,
                                        decoration: InputDecoration(                                                                
                                        enabledBorder: OutlineInputBorder(
@@ -249,10 +256,12 @@ TextEditingController _endcontroller  = TextEditingController();
                                     Column(
                                      
                                       children:[
+                                           // ignore: sized_box_for_whitespace
                                            Container(
                                            height: size.height*0.08,
                                            width: size.width*0.65,
                                        child: TextFormField(
+                                         maxLength: 150,
                                       controller:_desccontroller,
                                     decoration: InputDecoration(                                                                
                                     enabledBorder: OutlineInputBorder(
@@ -304,6 +313,7 @@ TextEditingController _endcontroller  = TextEditingController();
                                   SizedBox(width: size.width*0.038,),
                                     Column(                                     
                                       children: [
+                                        // ignore: sized_box_for_whitespace
                                         Container(
                                           height: size.height*0.08,
                                           width: size.width*0.65,
@@ -364,6 +374,7 @@ TextEditingController _endcontroller  = TextEditingController();
                                     Column(
                                      
                                       children: [
+                                          // ignore: sized_box_for_whitespace
                                           Container(
                                            height: size.height*0.08,
                                            width: size.width*0.65,
@@ -419,14 +430,14 @@ TextEditingController _endcontroller  = TextEditingController();
                                       ]
                                     ),
                                      SizedBox(width: size.width*0.054,),
-                                    Column(
-                                     
+                                    Column(                                     
                                       children: [
+                                          // ignore: sized_box_for_whitespace
                                           Container(
                                            height: size.height*0.08,
-                                           width: size.width*0.65,
-                                          
+                                           width: size.width*0.65,                                          
                                        child: TextFormField(
+                                         textCapitalization: TextCapitalization.words,
                                        controller: _createdcontroller,
                                     decoration: InputDecoration(                                                                
                                     enabledBorder: OutlineInputBorder(
@@ -488,9 +499,15 @@ TextEditingController _endcontroller  = TextEditingController();
                                       //  newNotice.createdby=_by;                   
                                       //   insertNotice(newNotice);
                                       //   notice();
-                                      noticeApi(_titlecontroller.text, _desccontroller.text, _startcontroller.text, _endcontroller.text, _createdcontroller.text);
+                                      noticeApi(
+                                        _titlecontroller.text,
+                                         _desccontroller.text,
+                                         _startcontroller.text,
+                                         _endcontroller.text,
+                                         _createdcontroller.text
+                                         );
                                          Navigator.push(
-                 context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                            context, MaterialPageRoute(builder: (context) =>const  HomeScreen()));
                                           }                                          
                                          }
                                         )                                          

@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application/models/user_details_model.dart';
-import 'package:flutter_application/widgets/radio_buttons.dart';
 import 'package:image_picker/image_picker.dart';
-import '../screens/home_screen.dart';
 
 enum ImageSourceType { gallery, camera }
+// ignore: must_be_immutable
 class EditProfile extends StatefulWidget {
   UserProfileData details;
 
@@ -19,28 +18,35 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
-
+ TextEditingController gendercontr=TextEditingController();
+  // ignore: unused_field
   String _fullName = '';
-
+// ignore: unused_field, prefer_final_fields
   String _lastName = '';
-
+// ignore: unused_field
   String _number = '';  
-
+// ignore: unused_field
   String _userEmail = '';
-
+// ignore: unused_field
   String _ventureName = '';
-
+// ignore: unused_field
   String _blockName = '';
-
+// ignore: unused_field
   String _flatNo = '';
+  
+   String _selectedGender = '';
+
+  // ignore: prefer_typing_uninitialized_variables
   var _image;
+  // ignore: prefer_typing_uninitialized_variables
   var imagePicker;
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   
   @override
   void initState() {
     super.initState();
-    imagePicker = new ImagePicker();
+    imagePicker = ImagePicker();
   }
 
  void  takephoto(source) async {
@@ -65,10 +71,11 @@ void  galleryphoto(source) async {
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
+    // ignore: prefer_typing_uninitialized_variables
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
-        backgroundColor: Color.fromRGBO(39, 105, 170, 1), 
+        backgroundColor: const Color.fromRGBO(39, 105, 170, 1), 
         centerTitle: true,
       ),
       body: Padding(
@@ -85,6 +92,7 @@ void  galleryphoto(source) async {
                     children: [
                       Stack(
                         children: [
+                        // ignore: avoid_unnecessary_containers
                         Container(                                                                              
                           child: CircleAvatar(
                             radius: 68,
@@ -109,7 +117,7 @@ void  galleryphoto(source) async {
                            child: InkWell(
                            onTap: (){
                              showModalBottomSheet(context: context,
-                              builder:((Builder) => bottomSheet()),
+                              builder:((builder) => bottomSheet()),
                              );
                             },
                             child: 
@@ -124,6 +132,7 @@ void  galleryphoto(source) async {
                     ],
                   ),
           const SizedBox(height: 50,),
+           // ignore: avoid_unnecessary_containers
            Container(          
              child: Form(
                key: _formKey,
@@ -166,6 +175,7 @@ void  galleryphoto(source) async {
                         ),
                           const SizedBox(height: 12,),
                   TextFormField(
+                    textCapitalization: TextCapitalization.words,
                     initialValue: widget.details.firstName,
                           decoration: InputDecoration(                         
                             labelText: 'First Name',
@@ -193,8 +203,8 @@ void  galleryphoto(source) async {
                             validator: (value){
                             if(value== null ||  value.trim().isEmpty){
                               return 'Enter your Name';
-                            }if(value.trim().length<4){
-                              return 'Full name must be at least 4 charcters';
+                            }if(value.trim().length<3){
+                              return 'Full name must be at least 3 charcters';
                             }
                             return null;
                           },                          
@@ -202,6 +212,7 @@ void  galleryphoto(source) async {
                         ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            textCapitalization: TextCapitalization.words,
                             initialValue: widget.details.lastName,
                           decoration: InputDecoration(
                             labelText: 'Last Name',
@@ -229,6 +240,7 @@ void  galleryphoto(source) async {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            keyboardType: TextInputType.phone,
                             initialValue: '${widget.details.number}',
                           decoration: InputDecoration(
                             labelText: 'Contact No',
@@ -267,6 +279,7 @@ void  galleryphoto(source) async {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             initialValue: widget.details.emailId,
                           decoration: InputDecoration(
                             labelText: 'Email ID',
@@ -372,6 +385,7 @@ void  galleryphoto(source) async {
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
+                            textCapitalization: TextCapitalization.words,
                             initialValue:widget.details.ventureName,
                           decoration: InputDecoration(
                             labelText: 'Venture Name',
@@ -404,12 +418,54 @@ void  galleryphoto(source) async {
                           onChanged: (value) => _ventureName = value,
                           ),
                         const SizedBox(height: 12,),
-                        RadioButtons(),                                                 
+                         Row(
+                           children: [
+               Column(
+          
+            children: [
+             
+              ListTile(
+                
+                leading: Radio<String>(
+                  value: 'Male',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                     gendercontr.text = 'Male';
+                                     
+                    setState(() {
+                      _selectedGender = value!;
+                    });
+                  },
+                
+                ),
+                
+                title: const Text('Male'),
+              ),
+              
+              ListTile(
+                leading: Radio<String>(
+                  value: 'Female',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                     gendercontr.text = 'Female';
+                    setState(() {
+                      _selectedGender = value!;
+                      
+                    });
+                  },
+                ),
+                title: const Text('Female'),
+              ),
+            ])
+
+                           ]
+    ),                                                                         
                       ],
                      ), 
                   ),
                ),       
             const SizedBox(height: 25,),
+              // ignore: sized_box_for_whitespace
               Container(          
                 height: 60,                    
                 child: TextButton(

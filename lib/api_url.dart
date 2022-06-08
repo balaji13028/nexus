@@ -1,13 +1,15 @@
 
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_application/models/apartment-model.dart';
+import 'dart:typed_data';
+import 'package:flutter/widgets.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:flutter_application/models/apartment_model.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 import 'package:flutter_application/models/visitor_details_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'models/notice_model.dart';
 
@@ -17,15 +19,17 @@ import 'models/notice_model.dart';
     
   
   final response = await http.get(
-    Uri.parse('http://192.168.1.20:8080/SpringMVCBoilerplate/app/getdetails?username=${username}&password=${password}'));
+    Uri.parse('http://192.168.1.20:8080/SpringMVCTemplate/app/getdetails?username=$username&password=$password'));
      
 
 if (response.statusCode == 200) {
   
+   // ignore: avoid_print
    print('Response status: ${response.statusCode}');
-     print('Response status: ${response.body}');
+     
      
  }else {
+     // ignore: avoid_print
      print('Request failed with status: ${response.statusCode}.');
    }
  return response.body;
@@ -34,21 +38,24 @@ if (response.statusCode == 200) {
 
 
 // <--signup page api request starts-->//
+  // ignore: non_constant_identifier_names
   Future<String> Signup(fullname,username, phonenumber) async {
  
   
    final response = await http.get(
-    Uri.parse('http://192.168.1.20:8080/SpringMVCBoilerplate/app/signupdetails?fullname=${fullname}&username=${username}&phonenumber=${phonenumber}'));
+    Uri.parse('http://192.168.1.20:8080/SpringMVCTemplate/app/signupdetails?fullname=$fullname&username=$username&phonenumber=$phonenumber}'));
      
 
 if (response.statusCode == 200) {
   
+    // ignore: avoid_print
     print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
+      
      
   }else {
+   // ignore: avoid_print
    print('Request failed with status: ${response.statusCode}.');
-  print('Response status: ${response.body}');
+  
      
    }
  return response.body;
@@ -69,48 +76,50 @@ Map data = {
   };
   //encode Map to JSON
   var body = json.encode(data);
-  print('http://192.168.1.20:8080/SpringMVCBoilerplate/app/flatdetails?json=$body');
-
-   final response = await http.get(
+  
+   final request = await http.get(
     Uri.parse(
-      'http://192.168.1.20:8080/SpringMVCBoilerplate/app/flatdetails?json=$body'),
+      'http://192.168.1.20:8080/SpringMVCTemplate/app/flatdetails?json=$body'),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       },
       
       
       );
-if (response.statusCode == 200) {
+if (request.statusCode == 200) {
   
-    print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
+    // ignore: avoid_print
+    print('Response status: ${request.statusCode}');
+     // print('Response status: ${request.body}');
      
   }else {
-   print('Request failed with status: ${response.statusCode}.');
+   // ignore: avoid_print
+   print('Request failed with status: ${request.statusCode}.');
      
    }
- return response.body;
+ return request.body;
 }
 
 // To fatch data from server
 Future<List<ApartmentData>> flatResponse() async{
  final response = await http.get(
    Uri.parse(
-    'http://192.168.1.20:8080/SpringMVCBoilerplate/app/getflatdetails'));
+    'http://192.168.1.20:8080/SpringMVCTemplate/app/getflatdetails'));
      
 
    if (response.statusCode == 200) {
-  
+ // ignore: avoid_print
     print('Response status: ${response.statusCode}');
       //print('Response status: ${response.body}');
          }else {
+            // ignore: avoid_print
    print('Request failed with status: ${response.statusCode}.');
   
    }
  
  final List<dynamic> maps = json.decode(response.body);
-
-    print(' List of flats are'+maps.toString());
+ // ignore: avoid_print
+  //  print(' List of flats are'+maps.toString());
 
     List<ApartmentData> apartmentslist=  List.generate(maps.length, (i) {
       return ApartmentData (
@@ -123,7 +132,7 @@ Future<List<ApartmentData>> flatResponse() async{
         
       );
     });
-
+ 
   flatList = apartmentslist;
     return apartmentslist;
    
@@ -142,92 +151,74 @@ Map data = {
     'outtime':outtime,
     'outdate':outdate,
     'elapsedtime':elapsedtime,
-    'image':image.toString(),
+    
     
   };
   //encode Map to JSON
   var body = json.encode(data);
-  print('http://192.168.1.20:8080/SpringMVCBoilerplate/app/flatdetails?visitorDetails=$body'); 
+   // ignore: avoid_print
+  print('http://192.168.1.20:8080/SpringMVCTemplate/app/visitordetails?visitorDetails=$body'); 
 
- var stream =  http.ByteStream(image.openRead());
-       var length = await image.length();
-  Map<String, String> headers = {
-      "Accept": "application/json",
     
-    }; 
-    final response =  http.MultipartRequest('GET',
-     Uri.parse(
-       'http://192.168.1.20:8080/SpringMVCBoilerplate/app/visitordetails?visitorDetails=$body'));
+     final request =  http.MultipartRequest('POST',
+      Uri.parse(
+        'http://192.168.1.20:8080/SpringMVCTemplate/app/visitordetails?visitorDetails=$body&image=$image'));
      
- var multipartFile = http.MultipartFile('image',stream,length,                        
-           filename: basename(image.path));
-           response.files.add(multipartFile);
-       var res = await response.send();
-       print(res.statusCode);
-       res.stream.transform(utf8.decoder).listen((value) {
-         print(value);
-       });
+  var multipartFile = await http.MultipartFile.fromPath('image',image.path,                        
+       contentType: MediaType('image','jpeg'),filename: basename(image.path));
+            request.files.add(multipartFile);
+        var res = await request.send();
+         // ignore: avoid_print
+        print(res.statusCode);
+        res.stream.transform(utf8.decoder).listen((value) {
+           // ignore: avoid_print
+          print(value);
+      });
 
- //final response = await http.get(
- //    Uri.parse(
-  //     'http://192.168.1.20:8080/SpringMVCBoilerplate/app/flatdetails?json=$body'),
-  //     headers: <String, String>{
- //      'Content-Type': 'application/json; charset=UTF-8',
- //    },
-      
-      
-//       );
-//  if (response.statusCode == 200) {
-  
-//     print('Response status: ${response.statusCode}');
-//       print('Response status: ${response.body}');
-     
-//  }else {
-//    print('Request failed with status: ${response.statusCode}.');
-  
-     
-//    }
- 
- //return response.body;
+
 }
 
 //  To fatch data from server
-Future<List<VisitorData>> visiorsResponse() async{
+Future<List<VisitorData>> visitorsResponse() async{
  final response = await http.get(
    Uri.parse(
-    'http://192.168.1.20:8080/SpringMVCBoilerplate/app/getvisitordetails'));
+    'http://192.168.1.20:8080/SpringMVCTemplate/app/getvisitordetails'));
      
 
    if (response.statusCode == 200) {
-  
+ // ignore: avoid_print
     print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
+   
          }else {
+            // ignore: avoid_print
    print('Request failed with status: ${response.statusCode}.');
   
    }
- 
+  
  final List<dynamic> maps = json.decode(response.body);
-
-    print(' List of visitors are'+maps.toString());
-
+    // ignore: avoid_print
+    //print(' List of visitors are'+maps.toString());
+    
+    
    List<VisitorData> visitlist=  List.generate(maps.length, (i) {
       return VisitorData (
         id: (maps[i]['id'].toString()),
-        visitorName: maps[i]['name'].toString(),
-        visitorNumber: maps[i]['number'].toString(),
-        visitorImage: maps[i]['imagepath'].toString(),
-        typeOfVisitor: maps[i]['type'].toString(),
-        expectedDuration: maps[i]['duration'].toString(),
+        visitorName: maps[i]['fullname'].toString(),
+        visitorNumber: maps[i]['contactnumber'].toString(),
+        visitorImage: maps[i]['image'].toString(),
+        typeOfVisitor: maps[i]['typeofvisitor'].toString(),
+        expectedDuration: maps[i]['expectedtime'].toString(),
         inTime: maps[i]['intime'].toString(),
-        inDate: maps[i]['inDate'].toString(),
+        inDate: maps[i]['indate'].toString(),
         outTime: maps[i]['outtime'].toString(),
         outDate: maps[i]['outdate'].toString(),
-        timeElapsed: maps[i]['elasped'].toString(),
-
+        timeElapsed: maps[i]['elaspedtime'].toString(),
+        
+        
       );
     });
     
+     
     visList = visitlist;
     return visitlist;
   }
@@ -235,45 +226,55 @@ Future<List<VisitorData>> visiorsResponse() async{
 
 // <---users module starts---> //
 //users api request
-Future<String> userApi(firstname,lastname,role,mobilenumber,email,image,venturename,block,flatno,gender) async {
- 
-  
-   final response = await http.get(
-    Uri.parse(
-      'http://192.168.1.20:8080/SpringMVCBoilerplate/app/userprofiledetails?firstname=$firstname&lastname=$lastname&role=$role&mobilenumber=$mobilenumber&email=$email&image=$image&venturename=$venturename&block=$block&flatno=$flatno&gender=$gender'));
+userApi(firstname,lastname,role,mobilenumber,email,venturename,block,flatno,gender,File image) async {
+ Map details={
+   'firstname':firstname,
+      'lastname':lastname,
+      'number': mobilenumber,     
+      'role':role,
+      'email':email,
+      'flatno':flatno,
+      'blockName' :block,
+      'ventureName':venturename,
+      'gender':gender,
+ };
+   var body=json.encode(details);
+  final request =  http.MultipartRequest('POST',
+      Uri.parse(
+        'http://192.168.1.20:8080/SpringMVCTemplate/app/userprofiledetails?userProfile=$body&image=$image'));
      
-
-if (response.statusCode == 200) {
-  
-    print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
-     
-  }else {
-   print('Request failed with status: ${response.statusCode}.');
-  
-     
-   }
- return response.body;
+  var multipartFile = await http.MultipartFile.fromPath('image',image.path,                        
+       contentType: MediaType('image','jpeg'),filename: basename(image.path));
+            request.files.add(multipartFile);
+        var res = await request.send();
+         // ignore: avoid_print
+        print(res.statusCode);
+        res.stream.transform(utf8.decoder).listen((value) {
+           // ignore: avoid_print
+          print(value);
+      });
 }
+
 //  To fatch data from server
 Future<List<UserProfileData>> usersResponse() async{
  final response = await http.get(
    Uri.parse(
-    'http://192.168.1.20:8080/SpringMVCBoilerplate/app/getuserprofiledetails'));
+    'http://192.168.1.20:8080/SpringMVCTemplate/app/getuserprofiledetails'));
      
 
    if (response.statusCode == 200) {
-  
+    // ignore: avoid_print
     print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
+      
          }else {
+            // ignore: avoid_print
    print('Request failed with status: ${response.statusCode}.');
   
    }
  
  final List<dynamic> maps = json.decode(response.body);
-
-   print(' List of users are'+maps.toString());
+      // ignore: avoid_print
+  // print(' List of users are'+maps.toString());
 
     List<UserProfileData> userslist=  List.generate(maps.length, (i) {
       return UserProfileData (
@@ -281,12 +282,12 @@ Future<List<UserProfileData>> usersResponse() async{
         firstName: maps[i]['firstname'].toString(),
         lastName: maps[i]['lastname'].toString(),
         role: maps[i]['role'].toString(),
-        number: maps[i]['number'].toString(),
+        number: maps[i]['mobilenumber'].toString(),
         emailId: maps[i]['email'].toString(),
-        ventureName: maps[i]['ventureName'].toString(),
+        ventureName: maps[i]['venturename'].toString(),
         flatNo: maps[i]['flatno'].toString(),
-        blockName: maps[i]['blockName'].toString(),
-        image: maps[i]['imagepath'].toString(),
+        blockName: maps[i]['blockname'].toString(),
+        image: maps[i]['image'].toString(),
         gender: maps[i]['gender'].toString(),
 
       );
@@ -302,50 +303,53 @@ Future<List<UserProfileData>> usersResponse() async{
 Future<String> noticeApi(title,description,startdate,enddate,createdby) async {
  
   
-   final response = await http.get(
+   final request = await http.get(
     Uri.parse(
-      'http://192.168.1.20:8080/SpringMVCBoilerplate/app/noticesdetails?title=$title&description=$description&startdate=$startdate&enddate=$enddate&createdby=$createdby'));
+      'http://192.168.1.20:8080/SpringMVCTemplate/app/noticesdetails?title=$title&description=$description&startdate=$startdate&enddate=$enddate&createdby=$createdby'));
      
 
-if (response.statusCode == 200) {
-  
-    print('Response status: ${response.statusCode}');
-      print('Response status: ${response.body}');
+if (request.statusCode == 200) {
+   // ignore: avoid_print
+    print('Response status: ${request.statusCode}');
+     // ignore: avoid_print
+     // print('Response status: ${request.body}');
      
   }else {
-   print('Request failed with status: ${response.statusCode}.');
+     // ignore: avoid_print
+   print('Request failed with status: ${request.statusCode}.');
   
      
    }
- return response.body;
+ return request.body;
 }
 //to fatch data from server
 Future<List<NoticeData>> noticesResponse() async{
  final response = await http.get(
    Uri.parse(
-    'http://192.168.1.20:8080/SpringMVCBoilerplate/app/getnoticesdetails'));
+    'http://192.168.1.20:8080/SpringMVCTemplate/app/getnoticesdetails'));
      
 
    if (response.statusCode == 200) {
-  
+   // ignore: avoid_print
     print('Response status: ${response.statusCode}');
      // print('Response status: ${response.body}');
          }else {
+            // ignore: avoid_print
    print('Request failed with status: ${response.statusCode}.');
   
    }
  
  final List<dynamic> maps = json.decode(response.body);
-
-  print(' List of notices are'+maps.toString());
+   // ignore: avoid_print
+ // print(' List of notices are'+maps.toString());
 
     List<NoticeData> noticelist=  List.generate(maps.length, (i) {
       return NoticeData (
         id: (maps[i]['id'].toString()),
         title: maps[i]['title'].toString(),
         description: maps[i]['description'].toString(),
-        startDate: maps[i]['startDate'].toString(),
-        endDate: maps[i]['endDate'].toString(),
+        startDate: maps[i]['startdate'].toString(),
+        endDate: maps[i]['enddate'].toString(),
         createdby: maps[i]['createdby'].toString(),
        
       );
@@ -354,10 +358,6 @@ Future<List<NoticeData>> noticesResponse() async{
     noticeList = noticelist;
     return noticelist;
   }
+
  // <---notices module ends---> //
-
-
-
-
-
-   
+ 

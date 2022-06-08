@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 
 class NoticeData{
 String ? id,title,description,startDate,endDate,createdby;
@@ -33,5 +33,6 @@ Map<String, dynamic> toMap() {
 }
 
 
+  // ignore: unnecessary_new
   NoticeData newNotice= new NoticeData(); 
    List<NoticeData> noticeList =[]; 

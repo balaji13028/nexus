@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/apartments/apartment_details.dart';
-import 'package:flutter_application/models/apartment-model.dart';
-import 'package:flutter_application/models/user_details_model.dart';
-import 'package:flutter_application/models/visitor_details_model.dart';
-
+import 'package:flutter_application/models/apartment_model.dart';
 import '../screens/home_screen.dart';
 
 
+// ignore: must_be_immutable
 class EditApartmentDetails extends StatelessWidget {
 
 ApartmentData editapartment;
@@ -14,10 +12,15 @@ ApartmentData editapartment;
   EditApartmentDetails({Key? key,required this.editapartment}) : super(key: key);
 
  final _formKey = GlobalKey<FormState>();
+  // ignore: unused_field
   String _name='';
+   // ignore: unused_field
    String _number='';
- String _residing='';
+ // ignore: unused_field
+ final String _residing='';
+ // ignore: unused_field
  String _role='';
+ // ignore: unused_field
  String _floorno='';
 
 
@@ -53,7 +56,7 @@ ApartmentData editapartment;
                        ),
                        onPressed: (){
                        Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                        }
                        ),
                      ],
@@ -166,10 +169,12 @@ ApartmentData editapartment;
                                   Column(
                                      
                                     children: [
+                                      // ignore: sized_box_for_whitespace
                                       Container(                                      
                                         height: size.height*0.068,
                                         width: size.width*0.52,
                                        child: TextFormField(
+                                         textCapitalization: TextCapitalization.words,
                                          initialValue:editapartment.name,
                                        decoration: InputDecoration(                                                                
                                        enabledBorder: OutlineInputBorder(
@@ -233,10 +238,12 @@ ApartmentData editapartment;
                                     Column(
                                      
                                       children:[
+                                           // ignore: sized_box_for_whitespace
                                            Container(
                                            height: size.height*0.068,
                                            width: size.width*0.52,
                                        child: TextFormField(
+                                         keyboardType: TextInputType.phone,
                                          initialValue: editapartment.mobilenumber,
                                     decoration: InputDecoration(                                                                
                                     enabledBorder: OutlineInputBorder(
@@ -306,6 +313,7 @@ ApartmentData editapartment;
                                     Column(
                                      
                                       children: [
+                                           // ignore: sized_box_for_whitespace
                                            Container(
                                             height: size.height*0.068,
                                            width: size.width*0.52,
@@ -372,6 +380,7 @@ ApartmentData editapartment;
                                     Column(
                                      
                                       children: [
+                                          // ignore: sized_box_for_whitespace
                                           Container(
                                            height: size.height*0.068,
                                            width: size.width*0.52,
@@ -448,20 +457,10 @@ ApartmentData editapartment;
                               ),
                        ),
                      ),
-                ),
-             
-              
-                                       
-                                     ]
-                                   ),
-                       
-                         ),
-                      
-                    
-                
-              
-              
-      
-    );
-  }
+                 ),
+               ]
+            ), 
+        ),
+     );
+   }
 }

@@ -7,17 +7,13 @@ import 'package:flutter_application/models/notice_model.dart';
 class ListOfNotices extends StatelessWidget {
  final List<NoticeData> details;
 
-   ListOfNotices({Key? key,required this.details}) : super(key: key);
+   const ListOfNotices({Key? key,required this.details}) : super(key: key);
 
   
-
-
- 
-    
-
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
+     // ignore: avoid_print
      print('list of notices  ${details.length}');     
     return 
       Container(      

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 
 
@@ -44,6 +43,7 @@ class UserProfileData {
 }
 
 
+  // ignore: unnecessary_new
   UserProfileData newUser= new UserProfileData(); 
    List<UserProfileData> userList =[]; 
 

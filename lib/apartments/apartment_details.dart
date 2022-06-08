@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/models/apartment-model.dart';
-import 'package:flutter_application/models/user_details_model.dart';
+import 'package:flutter_application/models/apartment_model.dart';
 import 'package:flutter_application/screens/home_screen.dart';
-
 import 'edit_apartment_details.dart';
 
+// ignore: must_be_immutable
 class ApartmentDetails extends StatelessWidget {
 
   ApartmentData apartment;
@@ -45,7 +44,7 @@ class ApartmentDetails extends StatelessWidget {
                        ),
                        onPressed: (){
                        Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                        }
                        ),
                      ],
@@ -79,7 +78,7 @@ class ApartmentDetails extends StatelessWidget {
                          ), 
                          onPressed: () {  
                            Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => EditApartmentDetails(editapartment: apartment)));
+                               context, MaterialPageRoute(builder: (context) => EditApartmentDetails(editapartment: apartment)));
                          },
                          
                        )
@@ -132,7 +131,7 @@ class ApartmentDetails extends StatelessWidget {
                                  children: const [
                                     Text('Profile',
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 22,
                                       color: Colors.indigo,
                                       fontWeight: FontWeight.w500,
                                     ),)
@@ -144,7 +143,7 @@ class ApartmentDetails extends StatelessWidget {
                            thickness: 1,         
                           
                             ), 
-                                SizedBox(height: size.height*0.012,),                                              
+                                SizedBox(height: size.height*0.014,),                                              
                           Row(               
                             children: [                                                                            
                               Column(                             
@@ -174,7 +173,7 @@ class ApartmentDetails extends StatelessWidget {
                                   children: [
                                        Text(apartment.name!,                        
                                        style: const TextStyle(
-                                       fontSize: 20,
+                                       fontSize: 21,
                                        color: Colors.black,                          
                                   ),
                                   ),
@@ -184,7 +183,7 @@ class ApartmentDetails extends StatelessWidget {
                                 ],
                               ),
                             
-                           SizedBox(height: size.height*0.012,),
+                           SizedBox(height: size.height*0.013,),
                           Divider(
                            color: Colors.grey.shade400,           
                           
@@ -218,7 +217,7 @@ class ApartmentDetails extends StatelessWidget {
                                   children:[
                                        Text(apartment.mobilenumber!,                        
                                        style:const TextStyle(
-                                       fontSize: 20,
+                                       fontSize: 21,
                                        color: Colors.black,                          
                                   ),
                                   ),
@@ -228,7 +227,7 @@ class ApartmentDetails extends StatelessWidget {
                                 ],
                               ),
                             
-                           SizedBox(height: size.height*0.012,),
+                           SizedBox(height: size.height*0.013,),
                           Divider(
                            color: Colors.grey.shade400,           
                           
@@ -258,13 +257,13 @@ class ApartmentDetails extends StatelessWidget {
                                        ),
                                   ]
                                 ),
-                                 SizedBox(width: size.width*0.095,),
+                                 SizedBox(width: size.width*0.105,),
                                 Column(
                                  
                                   children: [
                                        Text(apartment.relationship!,                        
                                        style:const TextStyle(
-                                       fontSize: 20,
+                                       fontSize: 21,
                                        color: Colors.black,                          
                                   ),
                                   ),
@@ -274,7 +273,7 @@ class ApartmentDetails extends StatelessWidget {
                                 ],
                               ),
                             
-                           SizedBox(height: size.height*0.012,),
+                           SizedBox(height: size.height*0.014,),
                           Divider(
                            color: Colors.grey.shade400,           
                           
@@ -302,39 +301,27 @@ class ApartmentDetails extends StatelessWidget {
                                        ),
                                   ]
                                 ),
-                                 SizedBox(width: size.width*0.12,),
+                                 SizedBox(width: size.width*0.125,),
                                 Column(
                                  
                                   children: [
                                        Text(apartment.floor!,                        
                                        style: const TextStyle(
-                                       fontSize: 18,
+                                       fontSize: 21,
                                        color: Colors.black,                          
-                                  ),
-                                  ),
-                                  ],
-                                ),
-                                  
-                                ],
-                              ),
-                            
-                           
-                    ],
-                  ),
-                ),
-             
-              
-                                       
-                                     ]
+                                      ),
+                                     ),
+                                    ],
                                    ),
-                       
-                         ),
-                      
-                    
-                
-              
-              
-      
-    );
-  }
+                                  
+                                 ],
+                              ),
+                          ],
+                        ),
+                      ), 
+                  ]
+              ),
+          ),  
+      );
+   }
 }

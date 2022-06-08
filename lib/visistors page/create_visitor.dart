@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
 import 'package:flutter_application/models/visitor_details_model.dart';
 import 'package:flutter_application/screens/home_screen.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 
 
 class VisitorProfile extends StatefulWidget {
   
   final File img;
   
- VisitorProfile({ Key? key, required this.img }) : super(key: key);
+ const VisitorProfile({ Key? key, required this.img }) : super(key: key);
 
   @override
   State<VisitorProfile> createState() => _VisitorProfileState();
@@ -25,12 +26,12 @@ class _VisitorProfileState extends State<VisitorProfile> {
  TextEditingController flatcontroller = TextEditingController();
  TextEditingController controller = TextEditingController();
  
- 
+
   
 
   @override 
 void initState() {
-
+       
   super.initState();
 }
   
@@ -41,6 +42,7 @@ void initState() {
   bool textreadonly = true;  
   String visitorType ='';
   String durationtime='';
+  // ignore: unused_field, prefer_final_fields
   String _fullName = '';
 
   String number = '';
@@ -83,7 +85,7 @@ void initState() {
                        ),
                        onPressed: (){
                        Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                        }
                        ),
                      ],
@@ -143,6 +145,7 @@ void initState() {
                         child: Column(
                          children: [                          
                           TextFormField(
+                            textCapitalization: TextCapitalization.words,
                             controller: namecontroller,
                               decoration: InputDecoration(
                                 labelText: 'Full Name',
@@ -169,15 +172,17 @@ void initState() {
                                  validator: (value){
                                     if(value== null ||  value.trim().isEmpty){
                                       return 'Enter your Name';
-                                    }if(value.trim().length<4){
-                                      return 'Full name must be at least 4 charcters';
+                                    }if(value.trim().length<3){
+                                      return 'Full name must be at least 3 charcters';
                                     }
                                     return null;
                                   },
                                  onChanged: (value) => newVisitor.visitorName=value,
                                ),
-                          const SizedBox(height: 10,),
+                          const SizedBox(height: 20,),
                              TextFormField(
+                               maxLength: 10,
+                               keyboardType: TextInputType.phone,
                                controller: numbercontroller,
                                   decoration: InputDecoration(
                                     labelText: 'Contact Number',
@@ -214,10 +219,11 @@ void initState() {
                                   },          
                                   onChanged: (value) =>newVisitor.visitorNumber=value,
                                 ),
-                              const SizedBox(height: 10,),                               
+                                                             
                                 TextFormField(
+                                  keyboardType: TextInputType.number,
                                   controller: flatcontroller,
-                                          maxLength: 5,
+                                          maxLength: 3,
                                         decoration: InputDecoration(
                                         labelText: 'flat no',
                                           labelStyle:  TextStyle(
@@ -249,6 +255,7 @@ void initState() {
                                          onChanged: (value) => flatno = value,
                                     ), 
                                const SizedBox(height: 2,), 
+                                // ignore: avoid_unnecessary_containers
                                 Container(           
                                    child: Column(
                                      children: [
@@ -283,6 +290,7 @@ void initState() {
                                   ), 
                                 ),
                                  const SizedBox(height: 5,),
+                                   // ignore: prefer_const_constructors
                                    Text('Delivery'),
                                 ],
                               ),
@@ -407,7 +415,8 @@ void initState() {
                                  ],
                              ),
                            ),
-                          const SizedBox(height: 8,),               
+                          const SizedBox(height: 22,),               
+                           // ignore: avoid_unnecessary_containers
                            Container(                                           
                              child: TextButton(                                                                                                                                                                                                                                              
                                child:Ink(decoration:  BoxDecoration(
@@ -428,7 +437,7 @@ void initState() {
                                     ),
                                   ),  
                                 ),
-                                onPressed: (){                                        
+                                onPressed: ()async{                                        
                                   if(
                                   _formKey.currentState!.validate()){
                                   _formKey.currentState!.save();
@@ -442,32 +451,28 @@ void initState() {
                                   //    newVisitor.visitorImage=imagepath;
                                   //    insertVisitor(newVisitor);
                                   //    visit();  
-                                  visitorApi(namecontroller.text, numbercontroller.text, visitorType, flatcontroller.text, _controller.text, "--:--:---","--/--/----","null",widget.img,);                         
-                                Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => HomeScreen()));                                                                                                                
-                                  showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                  title:const  Text("Alert !",
-                                  style: TextStyle(
-                                  fontSize: 20,                    
-                                 ),
-                                ),
-                                  content: const Text("Successfully Created"),
-                                  actions: <Widget>[
-                                  TextButton(                                
-                                  onPressed: () {
-                                  Navigator.of(ctx).pop();                            
-                                },                              
-                                  child: const Text("Done"),
-                              ),
-                            ],
-                          ),
-                        );
+                                  visitorApi(
+                                    namecontroller.text,
+                                    numbercontroller.text, 
+                                    visitorType, 
+                                    flatcontroller.text,
+                                     _controller.text,
+                                     "--:--:--",
+                                     "--/--/----",
+                                     "null",
+                                     widget.img,);  
+                                            
+                                Navigator.push(                                  
+                                       context, MaterialPageRoute(builder: (context) => const HomeScreen()));                                                                                                                
+                                  EasyLoading.showSuccess('Created successfully',
+                                   duration: const Duration(seconds: 3),
+                                  );
+                                  
                                        }                                                                                                                                                                          
                                      }                                                  
                                     ),
-                                  ),      
+                                  ),  
+                                  const SizedBox(height: 15,),              
                                  ]
                                ),
                    

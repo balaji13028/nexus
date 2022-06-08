@@ -1,12 +1,13 @@
 
 
-import 'package:flutter/material.dart';
-
 
 // ignore: prefer_typing_uninitialized_variables
+import 'package:flutter/material.dart';
+
 var fido;
 class VisitorData{
   String?  visitorName,typeOfVisitor,visitorImage,inTime,inDate,outDate,id,visitorNumber,expectedDuration,outTime,timeElapsed;
+  Image? imagefile;
   VisitorData({
    this.id,
    this.visitorName,
@@ -18,7 +19,8 @@ class VisitorData{
    this.inDate,
    this.outTime,
    this.outDate,
-   this.timeElapsed
+   this.timeElapsed,
+   this.imagefile,
   });
   Map<String, dynamic> toMap() {
     return {
@@ -39,7 +41,7 @@ class VisitorData{
 
    @override
   String toString() {
-    return 'VisitorData{id: $id, name: $visitorName,number: $visitorNumber,imagepath:$visitorImage,type:$typeOfVisitor,duration:$expectedDuration,intime:$inTime,inDate:$inDate,outtime:$outTime,outdate:$outDate,:$timeElapsed,}';                                     
+    return 'VisitorData{id: $id, name: $visitorName,number: $visitorNumber,imagepath:$visitorImage,type:$typeOfVisitor,duration:$expectedDuration,intime:$inTime,inDate:$inDate,outtime:$outTime,outdate:$outDate,elapsed:$timeElapsed,}';                                     
   }
 }
 // ignore: unnecessary_new

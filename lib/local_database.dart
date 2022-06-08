@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'models/apartment-model.dart';
+import 'models/apartment_model.dart';
 import 'models/notice_model.dart';
 import 'models/user_details_model.dart';
 import 'models/visitor_details_model.dart';
@@ -42,13 +42,14 @@ void main() async {
   userList=await user();
   noticeList=await notice();
   //visList.add(fido);
+ // ignore: avoid_print
  print('database path is'+ dbPath);
 }
 
 Future<String> alterTable() async {
   final db = await database;
   var count = await db.execute("ALTER TABLE visitors ADD COLUMN apartmentName VARCHAR(50)");
-     
+// ignore: avoid_print
   print(await database.query('visitors'));
   return count;
 }
@@ -62,7 +63,7 @@ Future<String> alterTable() async {
       visitor.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    
+    // ignore: avoid_print
     print('inserted  is '+ visitor.toString());
   }
   
@@ -72,7 +73,7 @@ Future<String> alterTable() async {
 
     
     final List<Map<String, dynamic>> maps = await db.query('visitors');
-
+// ignore: avoid_print
     print(' List of visitors are'+maps.toString());
 
     List<VisitorData> visitlist=  List.generate(maps.length, (i) {
@@ -105,6 +106,7 @@ Future<String> alterTable() async {
       user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    // ignore: avoid_print
     print('inserted  is '+ user.toString());
   }
 
@@ -114,7 +116,7 @@ Future<List<UserProfileData>> user() async {
 
     
     final List<Map<String, dynamic>> maps = await db.query('users');
-
+// ignore: avoid_print
     print(' List of users are'+maps.toString());
 
     List<UserProfileData> userslist=  List.generate(maps.length, (i) {
@@ -147,6 +149,7 @@ Future<void> insertFlat(ApartmentData apartment) async {
       apartment.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    // ignore: avoid_print
     print('inserted  is '+ apartment.toString());
   }
 
@@ -158,7 +161,7 @@ Future<void> insertFlat(ApartmentData apartment) async {
 
     
     final List<Map<String, dynamic>> maps = await db.query('apartments');
-
+// ignore: avoid_print
     print(' List of flats are'+maps.toString());
 
     List<ApartmentData> apartmentslist=  List.generate(maps.length, (i) {
@@ -191,6 +194,7 @@ Future<void> updateFlat(ApartmentData apartment) async {
       // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [apartment.id],
     );
+    // ignore: avoid_print
     print('updated apartment details'+ apartment.id.toString());
   }
   // A method that retrieves all the visitors from the visitors table.
@@ -203,7 +207,7 @@ Future<void> insertNotice(NoticeData notice) async {
       notice.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    
+    // ignore: avoid_print
     print('inserted  is '+ notice.toString());
   }
   
@@ -213,7 +217,7 @@ Future<void> insertNotice(NoticeData notice) async {
 
     
     final List<Map<String, dynamic>> maps = await db.query('notice');
-
+// ignore: avoid_print
     print(' List of notices are'+maps.toString());
 
     List<NoticeData> noticelist=  List.generate(maps.length, (i) {

@@ -20,12 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
        debugShowCheckedModeBanner: false,
       home:AnimatedSplashScreen(
-        splash: Image.asset('assets/images/SandMLogo.png',width: 180,),
+        splash: Image.asset('assets/images/nexus_logo.png',),
+        // ignore: prefer_const_constructors
         nextScreen : LoginScreen(),
-        splashTransition:SplashTransition.fadeTransition, 
+        splashTransition:SplashTransition.scaleTransition, 
                      
-        duration: 2000,
-        backgroundColor: Color.fromRGBO(2,40,76,1),
+        duration: 1800,
+        backgroundColor: const Color.fromRGBO(2,40,76,1),
          
       ),
       builder: EasyLoading.init(),
