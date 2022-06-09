@@ -9,7 +9,8 @@ import '../apartments/apartment_details.dart';
 // ignore: must_be_immutable
 class ListOfApartments extends StatelessWidget {
 
-   List<ApartmentData> details;
+  List<ApartmentData> details;
+
  ListOfApartments({ Key? key,required this.details,}) : super(key: key);
 
  
@@ -40,12 +41,12 @@ class ListOfApartments extends StatelessWidget {
                                                         
                return Padding(padding: const EdgeInsets.symmetric(horizontal: 2,),
                    child:
-                         GestureDetector(
-                                       onTap: () {                                     
-                                           Navigator.push(
-                                        context, MaterialPageRoute(builder: (context) => ApartmentDetails(apartment: details[index],)));                                                                
-                                   }, 
-                          child: Card(
+                      GestureDetector(
+                        onTap: () {                                     
+                           Navigator.push(
+                             context, MaterialPageRoute(builder: (context) => ApartmentDetails(apartment: details[index],)));                                                                
+                            },                 
+                        child: Card(
                             margin:const EdgeInsets.symmetric(horizontal: 5.0,vertical: 6,),
                             elevation:2.0,
                             shadowColor: Colors.white,    

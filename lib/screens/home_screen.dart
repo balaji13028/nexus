@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/models/apartment_model.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 import 'package:flutter_application/notice/add_notice.dart';
-
 import 'package:flutter_application/screens/login_screen.dart';
 import 'package:flutter_application/widgets/list_of_notices.dart';
 import 'package:flutter_application/widgets/list_of_visitors.dart';
 import 'package:image_picker/image_picker.dart';
 import '../apartments/create_a_apartment.dart';
-
 import '../models/notice_model.dart';
 import '../models/visitor_details_model.dart';
 import '../user profile pages/edit_user_profile.dart';
