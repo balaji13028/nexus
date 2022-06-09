@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/apartment_model.dart';
@@ -191,9 +192,9 @@ void initState() {
                currentAccountPicture: CircleAvatar(
                  backgroundColor: Colors.grey,            
                 child: ClipOval(                                                     
-                            child:( newUser.image == null)
+                            child:( userList == null)
                             ? Image.asset(details[0].image!,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.378,)
-                            : Image.file(File(newUser.image!),fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
+                            : Image.memory(base64Decode(userList[0].image!),fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
                           ),
                         ),                      
                  
