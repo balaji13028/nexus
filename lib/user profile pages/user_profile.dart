@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class ViewProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
+    var decodebyte= base64Decode(details.image!);
     Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +35,7 @@ class ViewProfile extends StatelessWidget {
                   child: CircleAvatar(
                   radius: 59,
                   child: ClipOval(
-                    child: Image.file(File(details.image!),fit: BoxFit.cover,width: size.width*0.34,),
+                    child: Image.memory(decodebyte,fit: BoxFit.cover,width: size.width*0.34,),
                   ),
                     
                   ),          

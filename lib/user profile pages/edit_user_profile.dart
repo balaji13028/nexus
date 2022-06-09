@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -70,6 +71,7 @@ void  galleryphoto(source) async {
               }   
   @override
   Widget build(BuildContext context) {
+    var decodebyte= base64Decode(widget.details.image!);
     Size size=MediaQuery.of(context).size;
     // ignore: prefer_typing_uninitialized_variables
     return Scaffold(
@@ -99,7 +101,7 @@ void  galleryphoto(source) async {
                           child: ClipOval(                                                     
                           child:(_image != null)
                           ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.378,)
-                          : Image.file(File(widget.details.image!),fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
+                          : Image.memory(decodebyte,fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
                         ),
                       ),                      
                    ), 
@@ -418,8 +420,8 @@ void  galleryphoto(source) async {
                           onChanged: (value) => _ventureName = value,
                           ),
                         const SizedBox(height: 12,),
-                         Row(
-                           children: [
+                        Container(
+                           child: 
                Column(
           
             children: [
@@ -451,19 +453,17 @@ void  galleryphoto(source) async {
                     setState(() {
                       _selectedGender = value!;
                       
-                    });
-                  },
-                ),
-                title: const Text('Female'),
-              ),
-            ])
-
-                           ]
-    ),                                                                         
-                      ],
-                     ), 
-                  ),
-               ),       
+                       });
+                      },
+                    ),
+                   title: const Text('Female'),
+                      ),
+                    ])                           
+                  ),                                                                         
+                 ],
+              ), 
+            ),
+         ),       
             const SizedBox(height: 25,),
               // ignore: sized_box_for_whitespace
               Container(          

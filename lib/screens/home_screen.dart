@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/api_url.dart';
 import 'package:flutter_application/models/apartment_model.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 import 'package:flutter_application/notice/add_notice.dart';
@@ -146,7 +145,7 @@ void initState() {
                ),
                ),
             ),
-             ListOfProfiles(details:visList,),
+             ListOfVisitors(details:visList,),
             SizedBox(height: size.height*0.014,),
               Divider(
                color: Colors.grey.shade300,           
@@ -206,7 +205,7 @@ void initState() {
                 leading: const Icon(Icons.person),
                onTap: () {
                Navigator.push(
-                   context, MaterialPageRoute(builder: (context) =>ViewProfile(details:newUser)));
+                   context, MaterialPageRoute(builder: (context) =>ViewProfile(details:userList[0])));
              },
                 
                   
@@ -216,7 +215,7 @@ void initState() {
                 leading: const Icon(Icons.edit), 
                  onTap: () {
                Navigator.push(
-                   context, MaterialPageRoute(builder: (context) => EditProfile(details: newUser,)));
+                   context, MaterialPageRoute(builder: (context) => EditProfile(details: userList[0],)));
                 }, 
                ),  
                ListTile(  

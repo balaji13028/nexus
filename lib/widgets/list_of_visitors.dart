@@ -8,11 +8,11 @@ import 'package:flutter_application/visistors%20page/vsitor_intime_details.dart'
 
 
 
-class ListOfProfiles extends StatelessWidget {
+class ListOfVisitors extends StatelessWidget {
 
   final List<VisitorData> details;
 
- const ListOfProfiles({ Key? key,required this.details,}) : super(key: key);
+ const ListOfVisitors({ Key? key,required this.details,}) : super(key: key);
  
 
   @override
