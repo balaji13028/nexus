@@ -20,13 +20,13 @@ class ListOfApartments extends StatelessWidget {
       // ignore: avoid_print
       print('list of flats  ${details.length}');     
     return Card(      
-     margin:const EdgeInsets.symmetric(horizontal: 14.0,vertical: 6,),
-      elevation:8.0,
+     margin:const EdgeInsets.symmetric(horizontal: 4.0,),
+      elevation:2.5,
       shadowColor: Colors.white,    
      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), 
       child:Container(
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(39, 105, 170, 1), 
+          color: const Color.fromARGB(255, 30, 82, 134),
 
           borderRadius: BorderRadius.circular(10)
         ),
@@ -60,17 +60,15 @@ class ListOfApartments extends StatelessWidget {
                               width: 60,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [                            
-                                                                                                                                           
-                                       
-                                       Text('${details[index].flatno}',
+                                children: [                                                                                                                                                                                                              
+                                  Text('${details[index].flatno}',
                                       style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold
-                                      ),) ,
-                                                                                                                                              
-                                const SizedBox(height: 2,),
-                                  Text('${details[index].relationship}',
+                                      ),
+                                  ),
+                                  const SizedBox(height: 2,),
+                                  Text('${details[index].role}',
                                   style:TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/api_url.dart';
 
 import 'package:flutter_application/models/user_details_model.dart';
 import 'package:image_picker/image_picker.dart';
@@ -76,9 +77,9 @@ void  galleryphoto(source) async {
     // ignore: prefer_typing_uninitialized_variables
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text('Edit Profile Details'),
         backgroundColor: const Color.fromRGBO(39, 105, 170, 1), 
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: Padding(
       padding:const EdgeInsets.symmetric(horizontal: 26,),      
@@ -101,7 +102,8 @@ void  galleryphoto(source) async {
                           child: ClipOval(                                                     
                           child:(_image != null)
                           ? Image.file(_image,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.378,)
-                          : Image.memory(decodebyte,fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
+                          : Image.memory(decodebyte,fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4 
+                          //:Image.asset('assets/images/person.jpg',fit: BoxFit.cover,                                                                        
                         ),
                       ),                      
                    ), 
@@ -139,48 +141,13 @@ void  galleryphoto(source) async {
              child: Form(
                key: _formKey,
                 child: Column(
-                 children: [
-                  TextFormField(
-                    initialValue: widget.details.role,
-                          decoration: InputDecoration(                         
-                            labelText: 'Who you are?',
-                            labelStyle:  TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade400,
-                              fontWeight: FontWeight.w600,
-                              
-                              ),
-                              prefixIcon:const Icon(Icons.person),
-                             enabledBorder: OutlineInputBorder(
-                             borderRadius: BorderRadius.circular(10),
-                             borderSide: BorderSide(
-                             color: Colors.grey.shade400,
-                             ),
-                            ),
-                           focusedBorder: OutlineInputBorder(
-                             borderRadius: BorderRadius.circular(10),
-                             borderSide:BorderSide(
-                             color: Colors.grey.shade400,
-                             ),
-                           ),
-                             floatingLabelBehavior : FloatingLabelBehavior.auto,
-                            ),
-                          validator: (value){
-                            if(value== null ||  value.trim().isEmpty){
-                              return 'Enter your Name';
-                            }if(value.trim().length<4){
-                              return 'Full name must be at least 4 charcters';
-                            }
-                            return null;
-                          },                          
-                          onChanged: (value) => _fullName=value,
-                        ),
-                          const SizedBox(height: 12,),
+                 children: [                  
                   TextFormField(
                     textCapitalization: TextCapitalization.words,
                     initialValue: widget.details.firstName,
+                    readOnly: true,
                           decoration: InputDecoration(                         
-                            labelText: 'First Name',
+                            labelText: 'User Name',
                             labelStyle:  TextStyle(
                               fontSize: 14,
                               color: Colors.grey.shade400,
@@ -238,12 +205,21 @@ void  galleryphoto(source) async {
                            ),
                              floatingLabelBehavior : FloatingLabelBehavior.auto,
                             ),
-                          
+                          validator: (value){
+                            if(value== null ||  value.trim().isEmpty){
+                              return 'Enter your Name';
+                            }if(value.trim().length<3){
+                              return 'Full name must be at least 3 charcters';
+                            }
+                            return null;
+                          },                          
+                          onChanged: (value) => _lastName=value,
                           ),
                           const SizedBox(height: 12,),
                           TextFormField(
                             keyboardType: TextInputType.phone,
                             initialValue: '${widget.details.number}',
+                            readOnly: true,
                           decoration: InputDecoration(
                             labelText: 'Contact No',
                             labelStyle:  TextStyle(
@@ -309,10 +285,10 @@ void  galleryphoto(source) async {
                             if(value== null || value.trim().isEmpty){
                               return 'Please enter your email';
                             }
-                            if (!RegExp(r'\S+@\S+\. com+').hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
-                             return null;
+                            //if (!RegExp(r'\S+@\S+\. com+').hasMatch(value)) {
+                             // return 'Please enter a valid email address';
+                            //}
+                            // return null;
                           },
                           onChanged: (value) => _userEmail = value,
                           ),
@@ -320,6 +296,7 @@ void  galleryphoto(source) async {
                            
                           TextFormField(
                             initialValue: '${widget.details.flatNo}',
+                            readOnly: true,
                           decoration: InputDecoration(
                             labelText: 'Flat No',
                             labelStyle:  TextStyle(
@@ -355,6 +332,7 @@ void  galleryphoto(source) async {
                          const  SizedBox(height: 12,),
                           TextFormField(
                             initialValue: widget.details.blockName,
+                            readOnly: true,
                           decoration: InputDecoration(
                             labelText: 'Block No',
                             labelStyle:  TextStyle(
@@ -388,9 +366,9 @@ void  galleryphoto(source) async {
                           const SizedBox(height: 12,),
                           TextFormField(
                             textCapitalization: TextCapitalization.words,
-                            initialValue:widget.details.ventureName,
+                            initialValue:widget.details.floorName,
                           decoration: InputDecoration(
-                            labelText: 'Venture Name',
+                            labelText: 'Floor Name',
                             labelStyle:  TextStyle(
                               fontSize: 14,
                               color: Colors.grey.shade400,
@@ -497,8 +475,10 @@ void  galleryphoto(source) async {
                               if(
                           _formKey.currentState!.validate()){
                           _formKey.currentState!.save();
+                          editUserProfile(widget.details.id!,_lastName,_userEmail,_selectedGender,_image);      
                           Navigator.pop(context);
-                        }                        
+                        }    
+              
                        }                                                  
                      ),
                   ),      

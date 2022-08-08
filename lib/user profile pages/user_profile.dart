@@ -1,7 +1,5 @@
 
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 
@@ -292,7 +290,7 @@ class ViewProfile extends StatelessWidget {
                                       color: Colors.white70
                                      ),
                                     ),
-                                  Text(details.ventureName!,
+                                  Text(details.floorName!,
                                     style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.white70

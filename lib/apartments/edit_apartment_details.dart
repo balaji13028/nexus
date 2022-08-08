@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/apartments/apartment_details.dart';
 import 'package:flutter_application/models/apartment_model.dart';
-import '../screens/home_screen.dart';
+import '../admin_module/admin_homepage.dart';
 
 
 // ignore: must_be_immutable
@@ -56,7 +56,7 @@ ApartmentData editapartment;
                        ),
                        onPressed: (){
                        Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                          context, MaterialPageRoute(builder: (context) => const AdminHomepage()));
                        }
                        ),
                      ],
@@ -318,7 +318,7 @@ ApartmentData editapartment;
                                             height: size.height*0.068,
                                            width: size.width*0.52,
                                        child: TextFormField(
-                                         initialValue: editapartment.relationship,
+                                         initialValue: editapartment.role,
                                     decoration: InputDecoration(                                                                
                                     enabledBorder: OutlineInputBorder(
                                        borderRadius: BorderRadius.circular(10),

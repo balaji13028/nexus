@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "655556525844",
+    "project_id": "nexus-fba20",
+    "storage_bucket": "nexus-fba20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655556525844:android:991a6d0fc60a30ac3f8c01",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655556525844-a228beaau07b1rpppthcsnvkp361meko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOHcRY4YLKAXa7KVMKXOwblw6BIdqZOlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655556525844-a228beaau07b1rpppthcsnvkp361meko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

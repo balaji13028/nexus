@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
 import 'package:image_picker/image_picker.dart';
-import '../screens/home_screen.dart';
+import '../admin_module/admin_homepage.dart';
 
 
 enum ImageSourceType { gallery, camera }
@@ -328,9 +328,9 @@ class _NewUserState extends State<NewUser> {
                             if(value== null || value.trim().isEmpty){
                               return 'Please enter your email';
                             }
-                            if (!RegExp(r'\S+@\S+\.com+').hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
+                            // if (!RegExp(r'\S+@\S+\.com+').hasMatch(value)) {
+                            //   return 'Please enter a valid email address';
+                            // }
                              return null;
                           },
                           onChanged: (value) => _userEmail = value,
@@ -545,7 +545,7 @@ class _NewUserState extends State<NewUser> {
                            );
                          
                          Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                        context, MaterialPageRoute(builder: (context) => const AdminHomepage()));
                        }
                                          
                        }                                                  

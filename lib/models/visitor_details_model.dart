@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 var fido;
 class VisitorData{
-  String?  visitorName,typeOfVisitor,visitorImage,inTime,inDate,outDate,id,visitorNumber,expectedDuration,outTime,timeElapsed;
+  String?  visitorName,typeOfVisitor,visitorImage,inTime,inDate,outDate,id,visitorNumber,expectedDuration,outTime,timeElapsed,blockname,apartmentName;
   Image? imagefile;
   VisitorData({
    this.id,
@@ -21,6 +21,8 @@ class VisitorData{
    this.outDate,
    this.timeElapsed,
    this.imagefile,
+   this.blockname,
+   this.apartmentName
   });
   Map<String, dynamic> toMap() {
     return {
@@ -30,6 +32,8 @@ class VisitorData{
       'imagepath':visitorImage,
       'type':typeOfVisitor,
       'duration':expectedDuration,
+      'blockname':blockname,
+      'apartmentName':apartmentName,
       'intime':inTime,
       'inDate' :inDate,
       'outtime':outTime,
@@ -41,7 +45,7 @@ class VisitorData{
 
    @override
   String toString() {
-    return 'VisitorData{id: $id, name: $visitorName,number: $visitorNumber,imagepath:$visitorImage,type:$typeOfVisitor,duration:$expectedDuration,intime:$inTime,inDate:$inDate,outtime:$outTime,outdate:$outDate,elapsed:$timeElapsed,}';                                     
+    return 'VisitorData{id: $id, name: $visitorName,number: $visitorNumber,imagepath:$visitorImage,type:$typeOfVisitor,duration:$expectedDuration,apartmentName:$apartmentName,blockname:$blockname,intime:$inTime,inDate:$inDate,outtime:$outTime,outdate:$outDate,elapsed:$timeElapsed,}';                                     
   }
 }
 // ignore: unnecessary_new

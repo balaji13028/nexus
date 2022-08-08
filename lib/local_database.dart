@@ -127,7 +127,7 @@ Future<List<UserProfileData>> user() async {
         role: maps[i]['role'].toString(),
         number: maps[i]['number'].toString(),
         emailId: maps[i]['email'].toString(),
-        ventureName: maps[i]['ventureName'].toString(),
+        floorName: maps[i]['ventureName'].toString(),
         flatNo: maps[i]['flatno'].toString(),
         blockName: maps[i]['blockName'].toString(),
         image: maps[i]['imagepath'].toString(),
@@ -167,7 +167,7 @@ Future<void> insertFlat(ApartmentData apartment) async {
     List<ApartmentData> apartmentslist=  List.generate(maps.length, (i) {
       return ApartmentData (
         id: (maps[i]['id'].toString()),
-        relationship: maps[i]['relationship'].toString(),
+        role: maps[i]['relationship'].toString(),
         name: maps[i]['name'].toString(),
         mobilenumber: maps[i]['mobilenumber'].toString(),
         flatno: maps[i]['flatno'].toString(),

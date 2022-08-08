@@ -2,7 +2,7 @@
 
 
 class UserProfileData {
-   String ? image, firstName, lastName,emailId,ventureName,blockName,gender,role, id,number,flatNo;
+   String ? image, firstName, lastName,emailId,floorName,blockName,gender,role, id,number,flatNo;
   
   UserProfileData({
     this.id,
@@ -10,7 +10,7 @@ class UserProfileData {
     this.image,
     this.lastName,
     this.emailId,
-    this.ventureName,
+    this.floorName,
     this.blockName,
     this.number,
     this.flatNo,
@@ -29,7 +29,7 @@ class UserProfileData {
       'email':emailId,
       'flatno':flatNo,
       'blockName' :blockName,
-      'ventureName':ventureName,
+      'ventureName':floorName,
       'gender':gender,
     
     };
@@ -38,7 +38,7 @@ class UserProfileData {
 
    @override
   String toString() {
-    return 'UserProfileData{id: $id, firstname: $firstName,lastname:$lastName,number: $number,imagepath:$image,gender:$gender,role:$role,email:$emailId,flatno:$flatNo,blockName:$blockName,ventureName:$ventureName,}';                                     
+    return 'UserProfileData{id: $id, firstname: $firstName,lastname:$lastName,number: $number,imagepath:$image,gender:$gender,role:$role,email:$emailId,flatno:$flatNo,blockName:$blockName,ventureName:$floorName,}';                                     
   }
 }
 
@@ -46,7 +46,7 @@ class UserProfileData {
   // ignore: unnecessary_new
   UserProfileData newUser= new UserProfileData(); 
    List<UserProfileData> userList =[]; 
-
+   
 List<UserProfileData> details = [
   UserProfileData(
     id: '0',
@@ -54,7 +54,7 @@ List<UserProfileData> details = [
       lastName: "muggulla",
       number: '9966704861',
       emailId: "balaji@gmail.com",
-      ventureName: "Bhapu nagar",
+      floorName: "Bhapu nagar",
       image: "assets/images/balaji.jpg",
       blockName: "C-Block",
       flatNo: '101',
@@ -67,7 +67,7 @@ UserProfileData(
       lastName: "talla",
       number: '9966704861',
       emailId: "balaji@gmail.com",
-      ventureName: "bhapu nagar",
+      floorName: "bhapu nagar",
       image: "assets/images/Facebook_logo.png",
       blockName: "C-Block",
       flatNo: '102',

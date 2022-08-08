@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
 import 'package:intl/intl.dart';
 
-import '../screens/home_screen.dart';
+import '../admin_module/admin_homepage.dart';
 
 class AddNotice extends StatefulWidget {
  const AddNotice({Key? key}) : super(key: key);
@@ -123,7 +123,7 @@ final TextEditingController _endcontroller  = TextEditingController();
                              ),
                              onPressed: (){
                              Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                              context, MaterialPageRoute(builder: (context) => const AdminHomepage()));
                              }
                              ),
                            ],
@@ -507,7 +507,7 @@ final TextEditingController _endcontroller  = TextEditingController();
                                          _createdcontroller.text
                                          );
                                          Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) =>const  HomeScreen()));
+                                            context, MaterialPageRoute(builder: (context) =>const  AdminHomepage()));
                                           }                                          
                                          }
                                         )                                          

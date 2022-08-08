@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_url.dart';
-import '../screens/home_screen.dart';
+import '../admin_module/admin_homepage.dart';
 
 // ignore: must_be_immutable
 class CreateApartment extends StatelessWidget {
@@ -287,7 +287,7 @@ String _flatNo='';
                                     flatResponse();
                                   Navigator.push(
                                     // ignore: prefer_const_constructors
-                                    context, MaterialPageRoute(builder: (context) => HomeScreen()));                                                                                                                
+                                    context, MaterialPageRoute(builder: (context) => AdminHomepage()));                                                                                                                
                                   
                                          }                                                                                                                                                                          
                                        }                                                  

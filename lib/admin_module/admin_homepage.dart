@@ -5,27 +5,29 @@ import 'package:flutter_application/models/apartment_model.dart';
 import 'package:flutter_application/models/user_details_model.dart';
 import 'package:flutter_application/notice/add_notice.dart';
 import 'package:flutter_application/screens/login_screen.dart';
+import 'package:flutter_application/screens/upi_screen.dart';
 import 'package:flutter_application/widgets/list_of_notices.dart';
-import 'package:flutter_application/widgets/list_of_visitors.dart';
 import 'package:image_picker/image_picker.dart';
 import '../apartments/create_a_apartment.dart';
 import '../models/notice_model.dart';
 import '../models/visitor_details_model.dart';
+import '../tenent_module/tenent_homepage.dart';
 import '../user profile pages/edit_user_profile.dart';
 import '../user profile pages/create_new_user.dart';
 import '../user profile pages/user_profile.dart';
-import '../visistors page/create_visitor.dart';
-import '../widgets/list_of_apartments.dart';
-import '../widgets/profile_details.dart';
+import 'a_create_visitor.dart';
+import 'list_of_apartments.dart';
+import 'a_visitors_list.dart';
+import 'admin_details.dart';
 
 
 
-class HomeScreen extends StatefulWidget {
+class AdminHomepage extends StatefulWidget {
 
-  const HomeScreen({ Key? key }) : super(key: key);
+  const AdminHomepage({ Key? key }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AdminHomepage> createState() => _AdminHomepageState();
 
 }
 
@@ -33,7 +35,7 @@ var _picPath;
 
 
 
-class _HomeScreenState extends State<HomeScreen>{
+class _AdminHomepageState extends State<AdminHomepage>{
 
   final GlobalKey<ScaffoldState> slidebar= GlobalKey();
     
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen>{
        
      });    
       await Navigator.push(                 
-          context, MaterialPageRoute(builder: (context) => VisitorProfile(img: _picPath)));
+          context, MaterialPageRoute(builder: (context) => AdminCreateVisitor(img: _picPath)));
   }
   
   @override 
@@ -94,7 +96,9 @@ void initState() {
               icon: const Icon(Icons.search),
               iconSize: 24.0,
               color: Colors.white,
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UpiPyaments()));
+              },
             )
           ],
         ),
@@ -117,7 +121,7 @@ void initState() {
              ),             
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 14,vertical: 12),
-              child:  Text('User Profile',        
+              child:  Text('My Profile',        
                style:TextStyle(
                  letterSpacing: 1.1,
                  color: Colors.black87,
@@ -126,7 +130,7 @@ void initState() {
                ),
                ),
             ),
-             ProfileDetails(user: userList,),
+            AdminDetails(user: userList,),
              SizedBox(height: size.height*0.012,),
               Divider(
                color: Colors.grey.shade300,           
@@ -135,7 +139,7 @@ void initState() {
               SizedBox(height: size.height*0.015,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 14,vertical: 12),
-              child:  Text('Visitor Details',        
+              child:  Text('List of Visitor',        
                style:TextStyle(
                  letterSpacing: 1.1,
                  color: Colors.black87,
@@ -144,14 +148,14 @@ void initState() {
                ),
                ),
             ),
-             ListOfVisitors(details:visList,),
-            SizedBox(height: size.height*0.014,),
+             AdminVisitorsList(details:visList,),
+            SizedBox(height: size.height*0.012,),
               Divider(
                color: Colors.grey.shade300,           
                thickness: 12,
              ),      
               Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 12),
               child:  Row(
                 children: [
                   Column(
@@ -166,11 +170,14 @@ void initState() {
                        ),
                     ],
                   ),
-                  SizedBox(width: size.width*0.26,),               
+                  SizedBox(width: size.width*0.3,),               
                 ],
               ),
             ),
-              ListOfApartments(details: flatList),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: ListOfApartments(details: flatList),
+              ),
               SizedBox(height: size.height*0.1,)
             ],
           ),
@@ -185,12 +192,12 @@ void initState() {
             decoration: const BoxDecoration(
           color: Color.fromRGBO(39, 105, 170, 1), 
              ),            
-               accountName: Text((userList == null)? '${details[0].firstName}' : userList[0].firstName!),
-               accountEmail: Text((userList == null)? '${details[0].number}' : userList[0].number!),
+               accountName: Text((userList.isEmpty)? '${details[0].firstName}' : userList[0].firstName!),
+               accountEmail: Text((userList.isEmpty)? '${details[0].number}' : userList[0].number!),
                currentAccountPicture: CircleAvatar(
                  backgroundColor: Colors.grey,            
                 child: ClipOval(                                                     
-                            child:( userList == null)
+                            child:( userList.isEmpty)
                             ? Image.asset(details[0].image!,fit: BoxFit.cover,height: size.height*0.215,width: size.width*0.378,)
                             : Image.memory(base64Decode(userList[0].image!),fit:BoxFit.cover, height: size.height*0.215,width: size.width*0.4                                                                         
                           ),
@@ -221,9 +228,8 @@ void initState() {
                 title: const Text("Settings"),  
               leading: const Icon(Icons.settings), 
               onTap: () {
-            
-                
-              
+              Navigator.push(
+                   context, MaterialPageRoute(builder: (context) =>const HomepageTN()));
              },
               ),  
               ListTile(  

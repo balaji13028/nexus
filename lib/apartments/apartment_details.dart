@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/apartment_model.dart';
-import 'package:flutter_application/screens/home_screen.dart';
+import 'package:flutter_application/admin_module/admin_homepage.dart';
 import 'edit_apartment_details.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +44,7 @@ class ApartmentDetails extends StatelessWidget {
                        ),
                        onPressed: (){
                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                            context, MaterialPageRoute(builder: (context) => const AdminHomepage()));
                        }
                        ),
                      ],
@@ -261,7 +261,7 @@ class ApartmentDetails extends StatelessWidget {
                                 Column(
                                  
                                   children: [
-                                       Text(apartment.relationship!,                        
+                                       Text(apartment.role!,                        
                                        style:const TextStyle(
                                        fontSize: 21,
                                        color: Colors.black,                          
